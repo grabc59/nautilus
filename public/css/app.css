@@ -1,0 +1,29 @@
+.media-object {
+  max-width: 200px;
+}
+
+[ng-click] {
+  cursor: pointer;
+}
+
+/*.search-form {
+  margin-top: 4px;
+}
+
+main.container {
+  margin-bottom: 4em;
+}*/
+
+/*.has-error {*/
+.invalid {
+  box-shadow: 0 0 5px red;
+  border-bottom: 1px solid red;
+}
+
+h1 {
+  margin-top: 0px;
+}
+
+button {
+  margin-top: 10px;
+}
