@@ -7,23 +7,118 @@
 
     <!-- CSS LINKS -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.css">
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    <!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css"> -->
+    <!-- <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/vendors/d3.min.js"></script>
 </head>
 <body>
-    <ui-view></ui-view>
+    <!-- <ui-view></ui-view> -->
+
+    <!--        -->
+    <!-- D3 POC -->
+    <!--        -->
+    <script>
+    var dataset = [ 5, 10, 20, 45, 6, 25 ];
+    var pie = d3.layout.pie();
+    var color = d3.scale.category10();
+    var w = 300;
+    var h = 300;
+    var outerRadius = w / 2;
+    var innerRadius = 0;
+
+    var arc = d3.svg.arc()
+        .innerRadius(innerRadius)
+        .outerRadius(outerRadius);
+
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+    var arcs = svg.selectAll("g.arc")
+        .data(pie(dataset)) // pie-ify
+        .enter() // for each datum
+        .append("g") // create a g element
+        .attr("class", "arc") // which will be an arc
+        // .transition()
+        .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")")// to size
+
+        // this will append a label to all arcs on hover of one of them
+        // .on("mouseover", function(d) {
+        //   console.log("mouseover")
+        //   arcs.append("text")
+        //     .attr("transform", function(d) {
+        //         return "translate(" + arc.centroid(d) + ")";
+        //     })
+        //     .attr("text-anchor", "middle")
+        //     .style("pointer-events", "none") // allow effects when hovering over chart labels
+        //     .text(function(d) {
+        //         return d.value;
+        //     })
+        // })
+
+    arcs.append("path")
+        .attr("fill", function(d, i) {
+          return color(i); // generate pie arc color
+        })
+        .attr("d", arc)
+        // .append("title")
+        //  .text(function(d) {
+        //     return "This value is " + d;
+        //  })
+
+
+    // arcs.append("text")
+    //     .attr("transform", function(d) {
+    //         return "translate(" + arc.centroid(d) + ")";
+    //     })
+    //     .attr("text-anchor", "middle")
+    //     .style("display", "none")
+    //     // .style("pointer-events", "none") // allow effects when hovering over chart labels
+    //     .text(function(d) {
+    //         return d.value;
+    //     })
+        arcs.on("mouseover", function(d) {
+          d3.select(this)
+          .append("text")
+          .attr("class", "chart-tooltip")
+          .attr("transform", function(d) {
+                return "translate(" + arc.centroid(d) + ")";
+            })
+          .attr("text-anchor", "middle")
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "11px")
+          .attr("font-weight", "bold")
+          .attr("fill", "black")
+            .text(function(d) {
+                return d.value;
+            })
+        })
+        arcs.on("mouseout", function(d) {
+          d3.selectAll(".chart-tooltip").remove()
+        })
+
+    </script>
+    <!-- <div id="chart-tooltip" class="hidden">
+        <p><strong>Important Label Heading</strong></p>
+        <p><span id="value">100</span>%</p>
+    </div> -->
+
+    <!-- <path d="M9.184850993605149e-15,-150A150,150 0 0,1
+    83.99621792063931,124.27644738657631L0,0Z"></path> -->
+
+
 
     <!-- JS LINKS -->
-    <script src="js/vendors/angular.min.js" charset="utf-8"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
     <script src="/js/vendors/materialize.min.js"></script>
     <script src="//unpkg.com/angular-ui-router@1.0.0-beta.3/release/angular-ui-router.js"></script>
 
     <script src="./app/app.module.js" charset="utf-8"></script>
     <script src="./app/app.config.js" charset="utf-8"></script>
     <script src="./app/ads-list/ads-list.service.js" charset="utf-8"></script>
-    <script src="./app/edit-ad/edit-ad.component.js" charset="utf-8"></script>
+    <script src="./app/edit-ad/edit-ad.component.js" charset="utf-8"></script> -->
 
 
 
