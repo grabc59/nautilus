@@ -19,8 +19,24 @@
     <!-- D3 POC -->
     <!--        -->
     <script>
-    var dataset = [ 5, 10, 20, 45, 6, 25 ];
+    // var dataset = [ 5, 10, 20, 45, 6, 25 ];
+    var dataset = [
+      {
+        "URL": "/route1",
+        "count": 156
+      },
+      {
+        "URL": "/index.html",
+        "count":30
+      },
+      {
+        "URL": "/script.js",
+        "count":50
+      }
+    ]
     var pie = d3.layout.pie();
+    var pie = d3.layout.pie()
+      .value(function(d) {return d.count});
     var color = d3.scale.category10();
     var w = 300;
     var h = 300;
@@ -35,7 +51,7 @@
         .append("svg")
         .attr("width", w)
         .attr("height", h);
-
+// console.log(pie(dataset))
     var arcs = svg.selectAll("g.arc")
         .data(pie(dataset)) // pie-ify
         .enter() // for each datum
@@ -44,60 +60,32 @@
         // .transition()
         .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")")// to size
 
-        // this will append a label to all arcs on hover of one of them
-        // .on("mouseover", function(d) {
-        //   console.log("mouseover")
-        //   arcs.append("text")
-        //     .attr("transform", function(d) {
-        //         return "translate(" + arc.centroid(d) + ")";
-        //     })
-        //     .attr("text-anchor", "middle")
-        //     .style("pointer-events", "none") // allow effects when hovering over chart labels
-        //     .text(function(d) {
-        //         return d.value;
-        //     })
-        // })
-
     arcs.append("path")
         .attr("fill", function(d, i) {
           return color(i); // generate pie arc color
         })
         .attr("d", arc)
-        // .append("title")
-        //  .text(function(d) {
-        //     return "This value is " + d;
-        //  })
 
+    arcs.on("mouseover", function(d) {
+      d3.select(this)
+      .append("text")
+      .attr("class", "chart-tooltip")
+      .attr("transform", function(d) {
+            return "translate(" + arc.centroid(d) + ")";
+        })
+      .attr("text-anchor", "middle")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "11px")
+      .attr("font-weight", "bold")
+      .attr("fill", "black")
+        .text(function(d) {
+            return d.count;
+        })
+    })
 
-    // arcs.append("text")
-    //     .attr("transform", function(d) {
-    //         return "translate(" + arc.centroid(d) + ")";
-    //     })
-    //     .attr("text-anchor", "middle")
-    //     .style("display", "none")
-    //     // .style("pointer-events", "none") // allow effects when hovering over chart labels
-    //     .text(function(d) {
-    //         return d.value;
-    //     })
-        arcs.on("mouseover", function(d) {
-          d3.select(this)
-          .append("text")
-          .attr("class", "chart-tooltip")
-          .attr("transform", function(d) {
-                return "translate(" + arc.centroid(d) + ")";
-            })
-          .attr("text-anchor", "middle")
-          .attr("font-family", "sans-serif")
-          .attr("font-size", "11px")
-          .attr("font-weight", "bold")
-          .attr("fill", "black")
-            .text(function(d) {
-                return d.value;
-            })
-        })
-        arcs.on("mouseout", function(d) {
-          d3.selectAll(".chart-tooltip").remove()
-        })
+    arcs.on("mouseout", function(d) {
+      d3.selectAll(".chart-tooltip").remove()
+    })
 
     </script>
     <!-- <div id="chart-tooltip" class="hidden">
