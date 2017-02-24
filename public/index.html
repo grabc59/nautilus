@@ -39,8 +39,8 @@
     var color = d3.scale.category10();
     var w = 300;
     var h = 300;
-    var outerRadius = w / 2;
-    var innerRadius = w / 2 * .6;
+    var outerRadius = w / 3;
+    var innerRadius = w / 3 * .6;
 
     var arc = d3.svg.arc()
         .innerRadius(innerRadius)
@@ -49,7 +49,8 @@
     var svg = d3.select("body")
         .append("svg")
         .attr("width", w)
-        .attr("height", h);
+        .attr("height", h)
+        .style("background", "grey")
 
     var arcs = svg.selectAll("g.arc")
         .data(pie(dataset)) // pie-ify
@@ -74,7 +75,19 @@
     .text(function(d) {
         return d.data.URL;
     })
+    arcs.on("click", function(d) {
+      w = 300 * 2;
+      h = 300 * 2;
+      d3.select("svg")
+        // .style("background", "black")
+        .transition()
+        .duration(1000)
+        .attr("width",w)
+        .attr("height", h)
 
+      svg.selectAll("g.arc")
+        .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")")
+    })
     // arcs.on("mouseover", function(d) {
     //   d3.select(this)
     //   .append("text")
@@ -109,6 +122,8 @@
     <script src="/app/app.module.js" charset="utf-8"></script>
     <script src="/app/app.config.js" charset="utf-8"></script>
     <script src="/app/dashboard/dashboard.component.js" charset="utf-8"></script>
+    <script src="/app/dashboard/card-list/card-list.component.js"></script>
+    <script src="/app/dashboard/nav-panel/nav-panel.component.js"></script>
     <!-- <script src="./app/edit-ad/edit-ad.component.js" charset="utf-8"></script> -->
 </body>
 </html>
