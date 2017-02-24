@@ -1,7 +1,7 @@
 'use strict';
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('logs', function(table) {
-    table.increments().notNullable();
+    table.increments().notNullable(); // id
     table.string('remote_address');
     table.string('remote_user');
     table.string('method');
