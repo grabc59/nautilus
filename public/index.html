@@ -51,13 +51,12 @@
         .append("svg")
         .attr("width", w)
         .attr("height", h);
-// console.log(pie(dataset))
+
     var arcs = svg.selectAll("g.arc")
         .data(pie(dataset)) // pie-ify
         .enter() // for each datum
         .append("g") // create a g element
         .attr("class", "arc") // which will be an arc
-        // .transition()
         .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")")// to size
 
     arcs.append("path")
@@ -66,26 +65,37 @@
         })
         .attr("d", arc)
 
-    arcs.on("mouseover", function(d) {
-      d3.select(this)
-      .append("text")
-      .attr("class", "chart-tooltip")
-      .attr("transform", function(d) {
-            return "translate(" + arc.centroid(d) + ")";
-        })
-      .attr("text-anchor", "middle")
-      .attr("font-family", "sans-serif")
-      .attr("font-size", "11px")
-      .attr("font-weight", "bold")
-      .attr("fill", "black")
-        .text(function(d) {
-            return d.count;
-        })
+    arcs.append("text")
+    .attr("font-weight", "bold")
+    .attr("transform", function(d) {
+          return "translate(" + arc.centroid(d) + ")";
+      })
+    .attr("text-anchor", "middle")
+    .attr("fill", "black")
+    .text(function(d) {
+        return d.data.URL;
     })
 
-    arcs.on("mouseout", function(d) {
-      d3.selectAll(".chart-tooltip").remove()
-    })
+    // arcs.on("mouseover", function(d) {
+    //   d3.select(this)
+    //   .append("text")
+    //   .attr("class", "chart-tooltip")
+    //   .attr("transform", function(d) {
+    //         return "translate(" + arc.centroid(d) + ")";
+    //     })
+    //   .attr("text-anchor", "middle")
+    //   .attr("font-family", "sans-serif")
+    //   .attr("font-size", "11px")
+    //   .attr("font-weight", "bold")
+    //   .attr("fill", "black")
+    //     .text(function(d) {
+    //         return d.data.URL;
+    //     })
+    // })
+    //
+    // arcs.on("mouseout", function(d) {
+    //   d3.selectAll(".chart-tooltip").remove()
+    // })
 
     </script>
     <!-- <div id="chart-tooltip" class="hidden">
