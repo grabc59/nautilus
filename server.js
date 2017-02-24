@@ -5,10 +5,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path')
 
-// if (process.env.NODE_ENV !== 'test') {
-//   const logger = require('morgan')
-//   app.use(logger('dev'))
-// }
+  // if (process.env.NODE_ENV !== 'test') {
+  //   const logger = require('morgan')
+  //   app.use(logger('dev'))
+  // }
 
 const logs = require('./routes/logs');
 
