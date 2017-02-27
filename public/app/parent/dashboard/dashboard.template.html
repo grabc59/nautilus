@@ -1,2 +1,21 @@
+<div class="row cards-container cg-cards-container" >
+    <!-- <div class="" ng-repeat="ad in $ctrl.ads | filter : $ctrl.searchText | orderBy : $ctrl.sortCategory : true" id={{$index}}> -->
+        <md-card>
+            <div class="card-image" >
+                <!-- <img ng-src={{ad.item_image}}  alt="item image">
+                <a ui-sref="editAd({id:ad.id})" style="right:70px;" class="btn-floating halfway-fab waves-effect waves-light rgb(38,166,154)"><i class="material-icons">mode_edit</i></a>
+                <a ng-click="$ctrl.deleteAd(ad.id)" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a> -->
+                <top-ips></top-ips>
+            </div>
+            <div class="card-content">
+                <h4 ><b>{{ad.title}}</b></h4>
+                <b>Description: </b><p class="card-text">{{ad.description}}</p>
+                <p><b>Price:</b> {{ad.price | currency}}</p>
+            </div>
+        </md-card>
+    <!-- </div> -->
+</div>
+
+<!-- <top-ips></top-ips> -->
+
 <p>dashboard template</p>
-<top-ips></top-ips>
