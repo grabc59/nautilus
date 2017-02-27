@@ -1,6 +1,7 @@
-<div layout="column" style="height: 500px;" flex ng-cloak>
+<div style="height: 100%;" ng-cloak>
+<!-- <div layout="column" style="height: 500px;"  ng-cloak> -->
   <section layout="row" flex>
-    <md-sidenav md-is-locked-open="true"  class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
+    <md-sidenav md-is-locked-open="true"  class="md-sidenav-left"  md-disable-backdrop md-whiteframe="4" flex="20">
       <ul>
         <li> <md-button>Dashboard</md-button></li>
         <li><md-button>Top IPs</md-button></li>
@@ -9,6 +10,8 @@
       <!-- TODO: menu collapse on small screens -->
     <!-- <md-sidenav md-is-locked-open="$mdMedia('gt-sm')"  class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4"> -->
     </md-sidenav>
+
+    <dashboard></dashboard>
   </section>
 
 </div>
