@@ -3,12 +3,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const path = require('path')
+const path = require('path');
+const morgan = require('morgan');
 
-  // if (process.env.NODE_ENV !== 'test') {
-  //   const logger = require('morgan')
-  //   app.use(logger('dev'))
-  // }
+app.use(morgan('dev'));
 
 const logs = require('./routes/logs');
 
