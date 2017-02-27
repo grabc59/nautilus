@@ -3,7 +3,7 @@
   angular.module('app')
   .component('navPanel', {
     controller: controller,
-    templateUrl: `app/dashboard/nav-panel/nav-panel.template.html`
+    templateUrl: `app/parent/nav-panel/nav-panel.template.html`
  });
     controller.$inject = ['$stateParams', '$state', '$scope', '$mdSidenav'];
 

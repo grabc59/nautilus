@@ -3,7 +3,7 @@
     angular.module('app')
         .component('topIps', {
             controller: controller,
-            templateUrl: `app/dashboard/card-list/top-ips/top-ips.template.html`
+            templateUrl: `app/parent/dashboard/top-ips/top-ips.template.html`
         });
     controller.$inject = ['$stateParams', '$state'];
 

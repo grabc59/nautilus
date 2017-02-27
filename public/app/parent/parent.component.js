@@ -1,9 +1,9 @@
 (function() {
   'use strict';
   angular.module('app')
-  .component('dashboard', {
+  .component('parent', {
     controller: controller,
-    templateUrl: `app/dashboard/dashboard.template.html`
+    templateUrl: `app/parent/parent.template.html`
  });
     controller.$inject = ['$stateParams', '$state'];
 
