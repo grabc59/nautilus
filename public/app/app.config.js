@@ -11,9 +11,9 @@
 
     $stateProvider
     .state({
-      name: 'parent',
+      name: 'dashboard',
       url: '/',
-      component: 'parent',
+      component: 'dashboard',
     });
   }
 }());
