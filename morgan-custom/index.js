@@ -127,7 +127,7 @@
                   debug('skip line')
                   return
               }
-
+              console.log(req);
               knex('logs')
                   .insert({
                       remote_address: req.ip,
