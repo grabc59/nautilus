@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
-const morgan = require('morgan');
+const morgan = require('./morgan-custom/index.js');
 
 app.use(morgan('dev'));
 
