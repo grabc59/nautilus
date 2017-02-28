@@ -31,8 +31,7 @@
 
 
             var color = d3.scale.quantize()
-                .range(["#f0f9e8","#bae4bc","#7bccc4","#43a2ca","#0868ac"]);
-
+                .range(["#41b6c4","#1d91c0","#225ea8","#253494"]);
             var svg = d3.select("#geomap")
                 .append("svg")
                 .attr("width", width)
@@ -73,7 +72,6 @@
                           .style("fill", function(d) {
                               //Get data value
                               var value = d.properties.value;
-                              console.log(value)
                               if (value) {
                                   //If value exists…
                                   return color(value);
@@ -83,49 +81,7 @@
                               }
                           });
                   });
-
             });
-            //  d3.csv("/assets/data/us-ag-productivity-2004.csv", function(data) {
-            //     color.domain([
-            //         d3.min(data, function(d) {
-            //             return d.value;
-            //         }),
-            //         d3.max(data, function(d) {
-            //             return d.value;
-            //         })
-            //     ]);
-            //
-            //     d3.json("/assets/data/us-states.json", function(json) {
-            //         for (var i = 0; i < data.length; i++) {
-            //             var dataState = data[i].state;
-            //             var dataValue = parseFloat(data[i].value);
-            //             for (var j = 0; j < json.features.length; j++) {
-            //                 var jsonState = json.features[j].properties.name;
-            //                 if (dataState == jsonState) {
-            //                     json.features[j].properties.value = dataValue;
-            //                     break;
-            //                 }
-            //             }
-            //         }
-            //         svg.selectAll("path")
-            //             .data(json.features)
-            //             .enter()
-            //             .append("path")
-            //             .attr("d", path)
-            //             .style("fill", function(d) {
-            //                 //Get data value
-            //                 var value = d.properties.value;
-            //
-            //                 if (value) {
-            //                     //If value exists…
-            //                     return color(value);
-            //                 } else {
-            //                     //If value is undefined…
-            //                     return "#ccc";
-            //                 }
-            //             });
-            //     });
-            // });
         };
     }
 }());
