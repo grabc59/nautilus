@@ -127,10 +127,10 @@
                   debug('skip line')
                   return
               }
-              console.log(req.headers['x-forwarded-for']);
+              // console.log(req.headers['x-forwarded-for']);
               knex('logs')
                   .insert({
-                      remote_address: req.ip,
+                      remote_address: req.headers['x-forwarded-for'] || req.ip,
                       method: req.method,
                       url: req.originalUrl,
                       status: res.statusCode,
