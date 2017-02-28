@@ -139,8 +139,9 @@
 
               checkExistingIP(reqIP)
                   .then((result) => {
-                      if (result) {
-                          console.log("Known IP, skipping IP API");
+                    // console.log('^^^^^^^^^^^^', result)
+                      if (result.length > 0) {
+                          // console.log("Known IP, skipping IP API");
                           checkIPAPI = false
                       }
                       knex('logs')
@@ -152,18 +153,20 @@
                               response_length: 50
                           }, '*')
                           .then((logInsertResult) => {
+                            // console.log('&&&&&&&&&', logInsertResult, checkIPAPI)
                               if (checkIPAPI) {
                                   http.get({
                                       host: 'ip-api.com',
-                                      path: '/json/' + result[0].remote_address
+                                      path: '/json/' + reqIP
                                   }, function(response) {
+                                      // console.log('!!!!!!!!!!!', response);
                                       var body = '';
                                       response.on('data', function(d) {
                                           body += d;
                                       });
                                       response.on('end', function() {
                                           var parsed = JSON.parse(body);
-                                          console.log('************', parsed)
+                                          // console.log('************', parsed)
                                           return knex('ip_lookups')
                                               .insert({
                                                   logs_id: logInsertResult.id,
