@@ -169,7 +169,7 @@
                                           console.log('************', parsed)
                                           return knex('ip_lookups')
                                               .insert({
-                                                  logs_id: logInsertResult.id,
+                                                  logs_id: logInsertResult[0].id,
                                                   country: parsed.country,
                                                   region_name: parsed.regionName,
                                                   city: parsed.city,
