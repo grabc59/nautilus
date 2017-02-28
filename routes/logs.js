@@ -19,11 +19,28 @@ router.get('/', function(req, res, next) {
         });
 });
 
+///////////////////////////////
+//////// CUSTOM 'GET' ROUTES
+///////////////////////////////
+
+//////// GEOMAP
 router.get('/geomap-data', function (req, res, next) {
     knex('logs')
       .join('ip_lookups', 'logs.id', '=', 'ip_lookups.logs_id')
       .select('logs.id', 'logs.remote_address', 'ip_lookups.region_name', 'ip_lookups.lat', 'ip_lookups.lon', 'logs.created_at', 'logs.updated_at')
     .orderBy('logs.id')
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+        next(err);
+    });
+});
+
+//////// TOP ROUTES
+router.get('/top-routes', function (req, res, next) {
+    knex('logs')
+      .select('logs.url')
     .then((result) => {
       res.send(result);
     })
