@@ -53,7 +53,16 @@
                 .attr("fill", function(d, i) {
                     return color(i); // generate pie arc color
                 })
-                .attr("d", arc);
+                // .attr("d", arc);
+                .transition()
+                  .ease("exp")
+                  .duration(1000)
+                  .attrTween("d", tweenPie)
+
+                function tweenPie(b) {
+                  var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
+                  return function(t) { return arc(i(t)); };
+                }
 
             arcs.append("text")
                 .attr("font-weight", "bold")

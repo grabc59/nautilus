@@ -29,9 +29,9 @@
 
             arrayToObjD3(routes, routeObj, "url");
             // console.log(routeObj);
-            let d3RouteData = [];
+            let d3RouteData = []
             for (var i in routeObj) {
-              let d3RouteObj = {};
+              let d3RouteObj = {}
               d3RouteObj.url = i;
               d3RouteObj.count = routeObj[i];
               d3RouteData.push(d3RouteObj);
@@ -39,13 +39,12 @@
             // console.log(d3RouteData)
 
 
-            var pie = d3.layout.pie()
+            var topRoutesPie = d3.layout.pie()
                 .startAngle(1.1*Math.PI)
                 .endAngle(3.1*Math.PI)
                 .value(function(d) {
                     return d.count
                 });
-                
             var color = d3.scale.category10();
             var w = 300;
             var h = 300;
@@ -56,19 +55,17 @@
                 .innerRadius(innerRadius)
                 .outerRadius(outerRadius);
 
-            var svg = d3.select("#top-routes")
+            var topRoutesSvg = d3.select("#top-routes")
                 .append("svg")
                 .attr("width", w)
                 .attr("height", h);
 
-            var arcs = svg.selectAll("g.arc")
-                .data(pie(d3RouteData)) // pie-ify
+            var arcs = topRoutesSvg.selectAll("g.arc")
+                .data(topRoutesPie(d3RouteData)) // pie-ify
                 .enter() // for each datum
                 .append("g") // create a g element
                 .attr("class", "arc") // which will be an arc
                 .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")"); // to size
-
-
 
             arcs.append("path")
                 .attr("fill", function(d, i) {
