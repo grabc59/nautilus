@@ -8,8 +8,8 @@ const router = express.Router();
 //////// GET ALL
 ////////////////////////
 router.get('/', function(req, res, next) {
-    knex('logs')
-        .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_length', 'created_at', 'updated_at')
+    knex('ip_lookups')
+        .select('id', 'logs_id', 'country', 'region_name', 'city', 'zip', 'lat', 'lon', 'isp', 'created_at', 'updated_at')
         .orderBy('id')
         .then((result) => {
             res.send(result);
@@ -19,25 +19,12 @@ router.get('/', function(req, res, next) {
         });
 });
 
-router.get('/geomap-data', function (req, res, next) {
-    knex('logs')
-      .join('ip_lookups', 'logs.id', '=', 'ip_lookups.logs_id')
-      .select('logs.id', 'logs.remote_address', 'ip_lookups.region_name', 'ip_lookups.lat', 'ip_lookups.lon', 'logs.created_at', 'logs.updated_at')
-    .orderBy('logs.id')
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-        next(err);
-    });
-});
-
 ////////////////////////
 //////// GET SINGLE
 ////////////////////////
 router.get('/:id', function(req, res, next) {
-    knex('logs')
-        .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_length', 'created_at', 'updated_at')
+    knex('ip_lookups')
+        .select('id', 'logs_id', 'country', 'region_name', 'city', 'zip', 'lat', 'lon', 'isp', 'created_at', 'updated_at')
         .where({
             id: req.params.id
         })
@@ -54,14 +41,16 @@ router.get('/:id', function(req, res, next) {
 //////// POST
 ////////////////////////
 router.post('/', function(req, res, next) {
-    knex('logs')
+    knex('ip_lookups')
         .insert({
-            remote_address: req.body.remote_address,
-            remote_user: req.body.remote_user,
-            method: req.body.method,
-            url: req.body.url,
-            status: req.body.status,
-            response_length: req.body.response_length
+            logs_id: req.body.logs_id,
+            country: req.body.country,
+            region_name: req.body.region_name,
+            city: req.body.city,
+            zip: req.body.zip,
+            lat: req.body.lat,
+            lon: req.body.lon,
+            isp: req.body.isp
         }, '*')
         .then((result) => {
             const return_result = result[0];
@@ -78,18 +67,20 @@ router.post('/', function(req, res, next) {
 //////// PATCH
 ////////////////////////
 router.patch('/:id', function(req, res, next) {
-    knex('logs')
+    knex('ip_lookups')
         .where({
             id: req.params.id
         })
         .first()
         .update({
-            remote_address: req.body.remote_address,
-            remote_user: req.body.remote_user,
-            method: req.body.method,
-            url: req.body.url,
-            status: req.body.status,
-            response_length: req.body.response_length
+            logs_id: req.body.logs_id,
+            country: req.body.country,
+            region_name: req.body.region_name,
+            city: req.body.city,
+            zip: req.body.zip,
+            lat: req.body.lat,
+            lon: req.body.lon,
+            isp: req.body.isp
         }, '*')
         .then((result) => {
             let return_result = result[0];
@@ -106,15 +97,15 @@ router.patch('/:id', function(req, res, next) {
 //////// DELETE
 ////////////////////////
 router.delete('/:id', function(req, res, next) {
-    knex('logs')
-        .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_length', 'created_at', 'updated_at')
+    knex('ip_lookups')
+        .select('id', 'logs_id', 'country', 'region_name', 'city', 'zip', 'lat', 'lon', 'isp', 'created_at', 'updated_at')
         .where({
             id: req.params.id
         })
         .first()
         .then((delete_item) => {
             let message = delete_item;
-            return knex('logs')
+            return knex('ip_lookups')
                 .del()
                 .where({
                     id: req.params.id

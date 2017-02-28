@@ -9,12 +9,14 @@ const morgan = require('./morgan-custom/index.js');
 app.use(morgan('dev'));
 
 const logs = require('./routes/logs');
+const ipLookups = require('./routes/ip_lookups');
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'node_modules')))
 
 app.use('/logs',logs);
+app.use('/ip_lookups', ipLookups)
 
 
 ////// WILDCARD ROUTE
