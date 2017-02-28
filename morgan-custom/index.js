@@ -163,6 +163,7 @@
                                       });
                                       response.on('end', function() {
                                           var parsed = JSON.parse(body);
+                                          console.log('************', parsed)
                                           return knex('ip_lookups')
                                               .insert({
                                                   logs_id: logInsertResult.id,
