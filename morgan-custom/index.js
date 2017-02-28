@@ -127,66 +127,81 @@
                   debug('skip line')
                   return
               }
-              // console.log(req.headers['x-forwarded-for']);
-              knex('logs')
-                  .insert({
-                      remote_address: req.headers['x-forwarded-for'] || req.ip,
-                      method: req.method,
-                      url: req.originalUrl,
-                      status: res.statusCode,
-                      response_length: 50
-                  }, '*')
+              var reqIP = req.headers['x-forwarded-for'] || req.ip;
+              var checkExistingIP = function(ip) {
+                  return knex('logs')
+                      .select('*')
+                      .where({
+                          remote_address: ip
+                      });
+              }
+              var checkIPAPI = true;
+
+              checkExistingIP(reqIP)
                   .then((result) => {
-                    knex('logs')
-                        .select('*')
-                        .where({
-                          remote_address: result[0].remote_address
-                        })
-                        .first()
-                        .then((result) => {
-                          if (result) {
-                            console.log("Known IP, skipping IP API");
-                          } else {
-                            http.get({
-                              host: 'ip-api.com',
-                              path: '/json/' + result[0].remote_address
-                            }, function (response) {
-                              var body = '';
-                              response.on('data', function(d) {
-                                body += d;
-                              });
-                              response.on('end', function() {
-                                var parsed = JSON.parse(body);
-                                console.log(parsed);
-                              });
-                            });
-                          }
-                        })
-                        .catch((err) => {
-                          next(err);
-                        });
+                      if (result) {
+                          console.log("Known IP, skipping IP API");
+                          checkIPAPI = false
+                      }
+                      knex('logs')
+                          .insert({
+                              remote_address: reqIP,
+                              method: req.method,
+                              url: req.originalUrl,
+                              status: res.statusCode,
+                              response_length: 50
+                          }, '*')
+                          .then((logInsertResult) => {
+                              if (checkIPAPI) {
+                                  http.get({
+                                      host: 'ip-api.com',
+                                      path: '/json/' + result[0].remote_address
+                                  }, function(response) {
+                                      var body = '';
+                                      response.on('data', function(d) {
+                                          body += d;
+                                      });
+                                      response.on('end', function() {
+                                          var parsed = JSON.parse(body);
+                                          return knex('ip_lookups')
+                                              .insert({
+                                                  logs_id: logInsertResult.id,
+                                                  country: parsed.country,
+                                                  region_name: parsed.regionName,
+                                                  city: parsed.city,
+                                                  zip: parsed.zip,
+                                                  lat: parsed.lat,
+                                                  lon: parsed.lon,
+                                                  isp: parsed.isp
+                                              });
+                                      });
+                                  });
+                              }
+                          })
+                          .catch((err) => {
+                              next(err);
+                          });
                   })
-                    .catch((err) => {
-                        next(err);
-                    });
-      console.log("logging");
-      debug('log request')
-      stream.write(line + '\n')
-  };
+                  .catch((err) => {
+                      next(err);
+                  });
+              debug('log request')
+              stream.write(line + '\n')
+          }
 
-  if (immediate) {
-      // immediate log
-      logRequest()
-  } else {
-      // record response start
-      onHeaders(res, recordStartTime)
+          if (immediate) {
+              // immediate log
+              logRequest()
+          } else {
+              // record response start
+              onHeaders(res, recordStartTime)
 
-      // log when response finished
-      onFinished(res, logRequest)
-  }
+              // log when response finished
+              onFinished(res, logRequest)
+          }
 
-  next()
-  }
+          next()
+      }
   }
 
   /**
