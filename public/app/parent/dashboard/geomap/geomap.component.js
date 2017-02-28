@@ -73,7 +73,7 @@
                           .style("fill", function(d) {
                               //Get data value
                               var value = d.properties.value;
-
+                              console.log(value)
                               if (value) {
                                   //If value exists…
                                   return color(value);
