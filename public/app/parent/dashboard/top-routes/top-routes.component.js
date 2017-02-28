@@ -10,7 +10,6 @@
     function controller($stateParams, $state) {
         const vm = this;
         vm.$onInit = function() {
-            console.log("top-routes controller");
             var dataset = [{
                     "URL": "/route1",
                     "count": 156
