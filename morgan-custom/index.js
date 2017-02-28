@@ -153,20 +153,20 @@
                               response_length: 50
                           }, '*')
                           .then((logInsertResult) => {
-                            // console.log('&&&&&&&&&', logInsertResult, checkIPAPI)
+                            console.log('&&&&&&&&&', logInsertResult, checkIPAPI)
                               if (checkIPAPI) {
                                   http.get({
                                       host: 'ip-api.com',
                                       path: '/json/' + reqIP
                                   }, function(response) {
-                                      // console.log('!!!!!!!!!!!', response);
+                                      console.log('!!!!!!!!!!!');
                                       var body = '';
                                       response.on('data', function(d) {
                                           body += d;
                                       });
                                       response.on('end', function() {
                                           var parsed = JSON.parse(body);
-                                          // console.log('************', parsed)
+                                          console.log('************', parsed)
                                           return knex('ip_lookups')
                                               .insert({
                                                   logs_id: logInsertResult.id,
@@ -177,6 +177,9 @@
                                                   lat: parsed.lat,
                                                   lon: parsed.lon,
                                                   isp: parsed.isp
+                                              })
+                                              .catch((err) => {
+                                                  next(err);
                                               });
                                       });
                                   });
