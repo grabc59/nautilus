@@ -57,8 +57,8 @@
                 .value(function(d) {
                     return d.count
                 });
-            // var color = d3.scale.category10();
-            var colorRange = d3.scale.category20();
+
+            var colorRange = d3.scale.category20c();
             var color = d3.scale.ordinal()
             	.range(colorRange.range());
 
@@ -73,8 +73,8 @@
                 ratio = 1,
                 h = w * ratio;
 
-            var outerRadius = w / 3;
-            var innerRadius = w / 3 * .5;
+            var outerRadius = w / 2;
+            var innerRadius = w / 2 * .5;
 
 
 

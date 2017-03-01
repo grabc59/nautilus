@@ -17,10 +17,11 @@
                     bottom: 10,
                     right: 10
                 },
-                width = parseInt(d3.select('#geomap').style('width')),
+                width = (parseInt(d3.select('#geomap').style('width'))) * 3,
                 width = width - margin.left - margin.right,
                 mapRatio = .5,
                 height = width * mapRatio;
+                console.log(width);
 
             var projection = d3.geo.albersUsa()
                 .scale(width)
@@ -36,6 +37,9 @@
                 .append("svg")
                 .attr("width", width)
                 .attr("height", height)
+                .attr("position","absolut")
+                .attr("align", "center")
+
 
             d3.xhr("/logs/geomap-data", function(err, data) {
               var visits = JSON.parse(data.responseText);
