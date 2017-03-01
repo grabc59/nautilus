@@ -114,34 +114,24 @@
             }
 
             //////// LEGEND
-            var legendRectSize = (outerRadius * 0.05);
-            var legendSpacing = outerRadius * 0.02;
-            var legend = topRoutesSvg.selectAll('.legend')
+            var topRoutesLegendContainer = d3.select("#top-routes")
+              .append("div")
+              .attr("width", w)
+              .attr("height", "50px")
+              .attr("class", "legend-container")
+              .attr("id", "top-routes-legend-container")
+              
+            var legend = topRoutesLegendContainer.selectAll('.legend')
                 .data(color.domain())
                 .enter()
                 .append('g')
                 .attr('class', 'legend')
-                .attr('transform', function(d, i) {
-                    var height = legendRectSize + legendSpacing;
-                    var offset =  height * color.domain().length / 2;
-                    var horz = -3 * legendRectSize;
-                    var vert = i * height - offset;
-                    return 'translate(' + horz + ',' + vert + ')';
-                });
 
-            legend.append('rect')
-            .attr('width', legendRectSize)
-            .attr('height', legendRectSize)
-            .style('fill', color)
-            .style('stroke', color);
-
-            legend.append('text')
-            .attr('x', legendRectSize + legendSpacing)
-            .attr('y', legendRectSize - legendSpacing)
-            .text(function(d) {
-              console.log(d);
-              return d;
-            });
+            legend.append('div')
+              .text(function(d) {
+                return d;
+              })
+            .style("color", color)
           });
         };
     }
