@@ -89,7 +89,7 @@
 
             arcs.append("path")
                 .attr("fill", function(d, i) {
-                    return color(i); // generate pie arc color
+                    return color(d.data.url); // generate pie arc color
                 })
                 .transition()
                   .ease("exp")
@@ -118,9 +118,7 @@
             var legendSpacing = outerRadius * 0.02;
             var legend = topRoutesSvg.selectAll('.legend')
                 .data(color.domain())
-                // .data(d3RouteData)
                 .enter()
-              // topRoutesSvg
                 .append('g')
                 .attr('class', 'legend')
                 .attr('transform', function(d, i) {
@@ -130,7 +128,6 @@
                     var vert = i * height - offset;
                     return 'translate(' + horz + ',' + vert + ')';
                 });
-                console.log(color.domain())
 
             legend.append('rect')
             .attr('width', legendRectSize)
@@ -142,7 +139,7 @@
             .attr('x', legendRectSize + legendSpacing)
             .attr('y', legendRectSize - legendSpacing)
             .text(function(d) {
-              // console.log(d);
+              console.log(d);
               return d;
             });
           });
