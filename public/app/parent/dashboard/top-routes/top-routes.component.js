@@ -19,7 +19,7 @@
           function countDataOccurances(jsonData, property1) {
             var occurancesObj = {};
             var array = JSON.parse(jsonData.responseText);
-            for (var i = 0; i < array.length; i++) {
+            for (var i = 0; i < 5; i++) {
               if (occurancesObj.hasOwnProperty(array[i][property1])) {
                 occurancesObj[array[i][property1]]++;
               } else {
@@ -39,8 +39,6 @@
             }
             return d3DataArray;
           }
-
-
 
           /////// CREATE TOOLTIP
           var topRoutesTooltip = d3.select("body").append("div").attr("class", "tooltip").attr("id", "top-routes-tooltip");
@@ -63,11 +61,20 @@
             var colorRange = d3.scale.category20();
             var color = d3.scale.ordinal()
             	.range(colorRange.range());
-            var w = 300;
-            var h = 300;
+
+            var margin = {
+                    top: 10,
+                    left: 10,
+                    bottom: 10,
+                    right: 10
+                },
+                w = parseInt(d3.select('#geomap').style('width')),
+                w = w - margin.left - margin.right,
+                ratio = 1,
+                h = w * ratio;
+
             var outerRadius = w / 3;
             var innerRadius = w / 3 * .5;
-
 
 
 
@@ -120,7 +127,7 @@
               .attr("height", "50px")
               .attr("class", "legend-container")
               .attr("id", "top-routes-legend-container")
-              
+
             var legend = topRoutesLegendContainer.selectAll('.legend')
                 .data(color.domain())
                 .enter()
