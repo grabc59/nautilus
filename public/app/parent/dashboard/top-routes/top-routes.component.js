@@ -65,7 +65,7 @@
                 .enter() // for each datum
                 .append("g") // create a g element
                 .attr("class", "arc") // which will be an arc
-                .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")"); // to size
+                .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")") // to size
 
             arcs.append("path")
                 .attr("fill", function(d, i) {
@@ -76,10 +76,15 @@
                   .duration(1000)
                   .attrTween("d", tweenPie)
 
-                function tweenPie(b) {
-                  var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
-                  return function(t) { return arc(i(t)); };
-                }
+            arcs.append("title")
+            .text(function(d) {
+               return d.data.url;
+             })
+
+            function tweenPie(b) {
+              var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
+              return function(t) { return arc(i(t)); };
+            }
           });
         };
     }

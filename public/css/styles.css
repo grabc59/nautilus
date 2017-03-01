@@ -6,6 +6,9 @@
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }*/
+#top-routes svg {
+    position: relative;
+}
 
 path:hover {
   fill: orange;
