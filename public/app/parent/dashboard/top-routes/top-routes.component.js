@@ -68,16 +68,14 @@
                     bottom: 10,
                     right: 10
                 },
-                w = parseInt(d3.select('#geomap').style('width')),
+                w = parseInt(d3.select('#top-routes').style('width')),
                 w = w - margin.left - margin.right,
                 ratio = 1,
                 h = w * ratio;
 
             var outerRadius = w / 2;
             var innerRadius = w / 2 * .5;
-
-
-
+            
             var arc = d3.svg.arc()
                 .innerRadius(innerRadius)
                 .outerRadius(outerRadius);

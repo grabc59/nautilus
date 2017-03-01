@@ -14,6 +14,16 @@
       name: 'dashboard',
       url: '/',
       component: 'dashboard',
-    });
+    })
+    .state({
+      name: 'geomap',
+      url: '/geomap',
+      component: 'geomap',
+    })
+    .state({
+      name: 'top-routes',
+      url: '/top-routes',
+      component: 'topRoutes',
+    })
   }
 }());

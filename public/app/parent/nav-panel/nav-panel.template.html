@@ -1,9 +1,22 @@
 <section layout="column" style="height: 100%;" flex>
   <md-sidenav md-is-locked-open="true"  class="md-sidenav-left"  md-disable-backdrop md-whiteframe="4" style="height: 100%;" ng-cloak>
     <ul>
-      <li> <md-button>Dashboard</md-button></li>
-      <li><md-button>Top IPs</md-button></li>
-      <li><md-button>Top Routes</md-button></li>
+      <li>
+        <a ui-sref="dashboard">
+          <md-button>Dashboard</md-button>
+        </a>
+      </li>
+
+      <li>
+        <a ui-sref="top-ips">
+          <md-button>Top IPs</md-button>
+        </a>
+      </li>
+      <li>
+        <a ui-sref="top-routes">
+          <md-button>Top Routes</md-button>
+        </a>
+      </li>
     </ul>
     <!-- TODO: menu collapse on small screens -->
   <!-- <md-sidenav md-is-locked-open="$mdMedia('gt-sm')"  class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4"> -->
