@@ -12,33 +12,47 @@
 
         vm.$onInit = function() {
 
-          d3.xhr("/logs/top-routes", function(err, data) {
-            var routes = JSON.parse(data.responseText);
-
-            var routeObj = {};
-
-            function arrayToObjD3(array, obj, property) {
-              for (var i = 0; i < array.length; i++) {
-                if (obj.hasOwnProperty(array[i][property])) {
-                   obj[array[i][property]]++;
-                } else {
-                   obj[array[i][property]] = 1;
-                }
+          ////////////////////////////
+          /////// HELPER FUNCTIONS
+          ////////////////////////////
+          /////// count occurances of each item in the requested data
+          function countDataOccurances(jsonData, property1) {
+            var occurancesObj = {};
+            var array = JSON.parse(jsonData.responseText);
+            for (var i = 0; i < array.length; i++) {
+              if (occurancesObj.hasOwnProperty(array[i][property1])) {
+                occurancesObj[array[i][property1]]++;
+              } else {
+                occurancesObj[array[i][property1]] = 1;
               }
             }
-
-            arrayToObjD3(routes, routeObj, "url");
-            // console.log(routeObj);
-            let d3RouteData = []
-            for (var i in routeObj) {
-              let d3RouteObj = {}
-              d3RouteObj.url = i;
-              d3RouteObj.count = routeObj[i];
-              d3RouteData.push(d3RouteObj);
+            return occurancesObj
+          }
+          /////// prep the data count so D3 can easily read it
+          function convertDataCountObjForD3(dataOccurances, propertyBeingCounted, resultPropertyName) {
+            var d3DataArray = [];
+            for (var i in dataOccurances) {
+              let d3DataObj = {}
+              d3DataObj[propertyBeingCounted] = i;
+              d3DataObj[resultPropertyName] = dataOccurances[i];
+              d3DataArray.push(d3DataObj);
             }
-            // console.log(d3RouteData)
+            return d3DataArray;
+          }
 
 
+
+          /////// CREATE TOOLTIP
+          var topRoutesTooltip = d3.select("body").append("div").attr("class", "tooltip").attr("id", "top-routes-tooltip");
+
+          /////// REQUEST DATA
+          d3.xhr("/logs/top-routes", function(err, data) {
+
+            ////// PREP REQUESTED DATA FOR D3
+            var d3RouteData = convertDataCountObjForD3(countDataOccurances(data, "url"), "url", "count" )
+            ////////////////////////////
+            /////// DRAW THE PIE CHART
+            ////////////////////////////
             var topRoutesPie = d3.layout.pie()
                 .startAngle(1.1*Math.PI)
                 .endAngle(3.1*Math.PI)
@@ -75,9 +89,8 @@
                   .ease("exp")
                   .duration(1000)
                   .attrTween("d", tweenPie)
-
-            var topRoutesTooltip = d3.select("body").append("div").attr("class", "tooltip").attr("id", "top-routes-tooltip");
-
+                  
+            /////// CHART LABELS
             arcs.on("mousemove", function(d){
                 topRoutesTooltip.style("left", d3.event.pageX+10+"px");
                 topRoutesTooltip.style("top", d3.event.pageY-25+"px");
