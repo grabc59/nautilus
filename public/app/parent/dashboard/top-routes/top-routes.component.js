@@ -59,11 +59,17 @@
                 .value(function(d) {
                     return d.count
                 });
-            var color = d3.scale.category10();
+            // var color = d3.scale.category10();
+            var colorRange = d3.scale.category20();
+            var color = d3.scale.ordinal()
+            	.range(colorRange.range());
             var w = 300;
             var h = 300;
             var outerRadius = w / 3;
-            var innerRadius = w / 3 * .6;
+            var innerRadius = w / 3 * .5;
+
+
+
 
             var arc = d3.svg.arc()
                 .innerRadius(innerRadius)
@@ -73,6 +79,39 @@
                 .append("svg")
                 .attr("width", w)
                 .attr("height", h);
+
+            //////// LEGEND
+            // var legendRectSize = (outerRadius * 0.05);
+            // var legendSpacing = outerRadius * 0.02;
+            // var legend = topRoutesSvg.selectAll('.legend')
+            //     .data(color.domain())
+            //     // .data(d3RouteData)
+            //     .enter()
+            //   // topRoutesSvg
+            //     .append('g')
+            //     .attr('class', 'legend')
+            //     .attr('transform', function(d, i) {
+            //         var height = legendRectSize + legendSpacing;
+            //         var offset =  height * color.domain().length / 2;
+            //         var horz = -3 * legendRectSize;
+            //         var vert = i * height - offset;
+            //         return 'translate(' + horz + ',' + vert + ')';
+            //     });
+            //     console.log(color.domain())
+            //
+            // legend.append('rect')
+            // .attr('width', legendRectSize)
+            // .attr('height', legendRectSize)
+            // .style('fill', color)
+            // .style('stroke', color);
+
+            // legend.append('text')
+            // .attr('x', legendRectSize + legendSpacing)
+            // .attr('y', legendRectSize - legendSpacing)
+            // .text(function(d) {
+            //   // console.log(d);
+            //   return d;
+            // });
 
             var arcs = topRoutesSvg.selectAll("g.arc")
                 .data(topRoutesPie(d3RouteData)) // pie-ify
@@ -89,7 +128,7 @@
                   .ease("exp")
                   .duration(1000)
                   .attrTween("d", tweenPie)
-                  
+
             /////// CHART LABELS
             arcs.on("mousemove", function(d){
                 topRoutesTooltip.style("left", d3.event.pageX+10+"px");
