@@ -80,39 +80,6 @@
                 .attr("width", w)
                 .attr("height", h);
 
-            //////// LEGEND
-            // var legendRectSize = (outerRadius * 0.05);
-            // var legendSpacing = outerRadius * 0.02;
-            // var legend = topRoutesSvg.selectAll('.legend')
-            //     .data(color.domain())
-            //     // .data(d3RouteData)
-            //     .enter()
-            //   // topRoutesSvg
-            //     .append('g')
-            //     .attr('class', 'legend')
-            //     .attr('transform', function(d, i) {
-            //         var height = legendRectSize + legendSpacing;
-            //         var offset =  height * color.domain().length / 2;
-            //         var horz = -3 * legendRectSize;
-            //         var vert = i * height - offset;
-            //         return 'translate(' + horz + ',' + vert + ')';
-            //     });
-            //     console.log(color.domain())
-            //
-            // legend.append('rect')
-            // .attr('width', legendRectSize)
-            // .attr('height', legendRectSize)
-            // .style('fill', color)
-            // .style('stroke', color);
-
-            // legend.append('text')
-            // .attr('x', legendRectSize + legendSpacing)
-            // .attr('y', legendRectSize - legendSpacing)
-            // .text(function(d) {
-            //   // console.log(d);
-            //   return d;
-            // });
-
             var arcs = topRoutesSvg.selectAll("g.arc")
                 .data(topRoutesPie(d3RouteData)) // pie-ify
                 .enter() // for each datum
@@ -145,6 +112,39 @@
               var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
               return function(t) { return arc(i(t)); };
             }
+
+            //////// LEGEND
+            var legendRectSize = (outerRadius * 0.05);
+            var legendSpacing = outerRadius * 0.02;
+            var legend = topRoutesSvg.selectAll('.legend')
+                .data(color.domain())
+                // .data(d3RouteData)
+                .enter()
+              // topRoutesSvg
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', function(d, i) {
+                    var height = legendRectSize + legendSpacing;
+                    var offset =  height * color.domain().length / 2;
+                    var horz = -3 * legendRectSize;
+                    var vert = i * height - offset;
+                    return 'translate(' + horz + ',' + vert + ')';
+                });
+                console.log(color.domain())
+
+            legend.append('rect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)
+            .style('fill', color)
+            .style('stroke', color);
+
+            legend.append('text')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .text(function(d) {
+              // console.log(d);
+              return d;
+            });
           });
         };
     }
