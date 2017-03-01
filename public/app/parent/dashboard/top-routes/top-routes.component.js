@@ -67,6 +67,7 @@
                 .attr("class", "arc") // which will be an arc
                 .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")") // to size
 
+
             arcs.append("path")
                 .attr("fill", function(d, i) {
                     return color(i); // generate pie arc color
@@ -76,10 +77,21 @@
                   .duration(1000)
                   .attrTween("d", tweenPie)
 
-            arcs.append("title")
-            .text(function(d) {
-               return d.data.url;
-             })
+            // arcs.append("title")
+            // .text(function(d) {
+            //    return d.data.url;
+            //  })
+            var topRoutesTooltip = d3.select("body").append("div").attr("class", "tooltip").attr("id", "top-routes-tooltip");
+
+            arcs.on("mousemove", function(d){
+                topRoutesTooltip.style("left", d3.event.pageX+10+"px");
+                topRoutesTooltip.style("top", d3.event.pageY-25+"px");
+                topRoutesTooltip.style("display", "inline-block");
+                topRoutesTooltip.html((d.data.label)+"<br>"+(d.data.value)+"%");
+            });
+            arcs.on("mouseout", function(d){
+                topRoutesTooltip.style("display", "none");
+            });
 
             function tweenPie(b) {
               var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
