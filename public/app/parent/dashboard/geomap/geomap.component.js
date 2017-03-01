@@ -52,7 +52,7 @@
                   geoMapData[visits[i].region_name] = 1;
                 }
               }
-              console.log(geoMapData);
+
               color.domain([
                   d3.min(d3.values(geoMapData), function(d) {
                       return d;
@@ -84,6 +84,27 @@
                                   return "#ccc";
                               }
                           });
+
+                      /////// CREATE TOOLTIP
+                      var geomapTooltip = d3.select("body").append("div").attr("class", "tooltip").attr("id", "geomap-tooltip");
+
+                      /////// Helper function for displaying visits
+                      function provideState(data) {
+                          return data.properties.value || "None";
+                      }
+                      /////// CHART TOOLTIPS
+                      var states = svg.selectAll("path");
+                      states.on("mousemove", function(d){
+                          geomapTooltip.style("left", d3.event.pageX+10+"px");
+                          geomapTooltip.style("top", d3.event.pageY-25+"px");
+                          geomapTooltip.style("display", "inline-block");
+                          geomapTooltip.style("word-wrap", "break-word");
+                          geomapTooltip.html("<strong>State: </strong>" +
+                          (d.properties.name) + "<br>" + "<strong>Count: </strong>" + provideState(d))
+                      })
+                      states.on("mouseout", function(d){
+                          geomapTooltip.style("display", "none");
+                      });
                   });
             });
         };
