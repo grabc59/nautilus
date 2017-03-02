@@ -62,20 +62,24 @@
             var color = d3.scale.ordinal()
             	.range(colorRange.range());
 
-            var margin = {
-                    top: 10,
-                    left: 10,
-                    bottom: 10,
-                    right: 10
-                },
-                w = parseInt(d3.select('#top-routes').style('width')),
-                w = w - margin.left - margin.right,
-                ratio = 1,
-                h = w * ratio;
+            // var margin = {
+            //         top: 10,
+            //         left: 10,
+            //         bottom: 10,
+            //         right: 10
+            //     },
+            //     w = parseInt(d3.select('#top-routes').style('width')),
+            //     w = w - margin.left - margin.right,
+            //     ratio = 1,
+            //     h = w * ratio;
+            var w = 200
+            var h = 200
 
             var outerRadius = w / 2;
             var innerRadius = w / 2 * .5;
-            
+
+
+
             var arc = d3.svg.arc()
                 .innerRadius(innerRadius)
                 .outerRadius(outerRadius);
@@ -84,6 +88,15 @@
                 .append("svg")
                 .attr("width", w)
                 .attr("height", h);
+
+            // var aspect = topRoutesSvg.attr('width') / topRoutesSvg.attr('height');
+            // var container = topRoutesSvg.node().parentNode;
+            //
+            // $(window).on("resize", function() {
+            //     var targetWidth = container.attr('width');
+            //     topRoutesSvg.attr("width", targetWidth);
+            //     topRoutesSvg.attr("height", Math.round(targetWidth / aspect));
+            // }).trigger("resize");
 
             var arcs = topRoutesSvg.selectAll("g.arc")
                 .data(topRoutesPie(d3RouteData)) // pie-ify

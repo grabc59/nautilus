@@ -17,7 +17,7 @@
                     bottom: 10,
                     right: 10
                 },
-                width = (parseInt(d3.select('#geomap').style('width'))) * 3,
+                width = parseInt(d3.select('#geomap').style('width')),
                 width = width - margin.left - margin.right,
                 mapRatio = .5,
                 height = width * mapRatio;
