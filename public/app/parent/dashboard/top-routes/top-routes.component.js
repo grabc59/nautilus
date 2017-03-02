@@ -19,7 +19,7 @@
           function countDataOccurances(jsonData, property1) {
             var occurancesObj = {};
             var array = JSON.parse(jsonData.responseText);
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < array.length; i++) {
               if (occurancesObj.hasOwnProperty(array[i][property1])) {
                 occurancesObj[array[i][property1]]++;
               } else {

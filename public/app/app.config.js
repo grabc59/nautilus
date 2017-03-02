@@ -21,9 +21,14 @@
       component: 'geomap',
     })
     .state({
-      name: 'top-routes',
+      name: 'topRoutes',
       url: '/top-routes',
       component: 'topRoutes',
+    })
+    .state({
+      name: 'requestCount',
+      url: '/request-count',
+      component: 'requestCount',
     })
   }
 }());
