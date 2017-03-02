@@ -21,7 +21,6 @@
                 width = width - margin.left - margin.right,
                 mapRatio = .5,
                 height = width * mapRatio;
-                console.log(width);
 
             var projection = d3.geo.albersUsa()
                 .scale(width)

@@ -78,8 +78,6 @@
             var outerRadius = w / 2;
             var innerRadius = w / 2 * .5;
 
-
-
             var arc = d3.svg.arc()
                 .innerRadius(innerRadius)
                 .outerRadius(outerRadius);
