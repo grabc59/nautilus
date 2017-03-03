@@ -8,8 +8,10 @@ exports.up = function(knex, Promise) {
     table.string('url');
     table.integer('status');
     table.integer('response_length');
+    table.integer('response_time');
     table.timestamps(true, true);
   });
+
 };
 
 exports.down = function(knex, Promise) {
