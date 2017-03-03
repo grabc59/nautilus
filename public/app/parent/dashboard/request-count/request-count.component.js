@@ -78,6 +78,8 @@
                 svg.append("g")
                     .attr("class", "axis x-axis")
                     .attr("transform", "translate(0," + (height - padding) + ")")
+                    .transition()
+                    .duration(1000)
                     .call(xAxis);
 
                 var yAxis = d3.svg.axis()
@@ -92,6 +94,8 @@
                 svg.append("g")
                     .attr("class", "axis y-axis")
                     .attr("transform", "translate(" + padding + ",0)")
+                    .transition()
+                    .duration(1000)
                     .call(yAxis);
 
                 var path = svg
