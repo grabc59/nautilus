@@ -53,30 +53,31 @@
                 var svg = d3.select("#request-count")
                     .append("svg")
 
-                var margin = {
-                        top: 20,
-                        right: 20,
-                        bottom: 30,
-                        left: 50
-                    },
-                    width = 300,
-                    height = 200
+                // var margin = {
+                //         top: 20,
+                //         right: 20,
+                //         bottom: 30,
+                //         left: 50
+                //     },
+                    var width = 300
+                    var height = 200
 
-                svg.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-                    .attr("width", width)
-                    .attr("height", height)
+                // svg.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                // .attr("width", width)
+                // .attr("height", height)
+                svg.attr("viewBox", "0 0 " + width + " " + height)
 
                 var x = d3.time.scale()
                     .domain(d3.extent(d3DataArray, function(d) {
                         return d.time;
                     }))
-                    .rangeRound([0, width]);
+                    .rangeRound([padding, width - padding]);
 
                 var y = d3.scale.linear()
                     .domain(d3.extent(d3DataArray, function(d) {
                         return d.count;
                     }))
-                    .rangeRound([height, 0]);
+                    .rangeRound([height - padding, padding]);
 
                 var line = d3.svg.line()
                     .x(function(d) {
