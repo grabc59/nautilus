@@ -14,29 +14,29 @@
           d3.xhr("/logs", function(err, data) {
               // created_at will look like this 2017-02-28T05:52:43.857Z
               // parse the JSON
-              var parsedData = JSON.parse(data.responseText)
-              var parseTime = d3.timeParse("%Y-%m-%d");
+              var d3DataArray = JSON.parse(data.responseText)
+              var parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S");
               var dateOccurrences = {}
-              var d3DataArray = [];
+              // var d3DataArray = [];
 
-              parsedData.forEach(function(element) {
-                  // filter for each created_at field
+              d3DataArray.forEach(function(element) {
+                // clean ms off the timestamp and convert for d3
                   let time = element.created_at;
-                  let cleanedTime = time.slice(0, time.indexOf("T"));
-                  // count occurances of each time
-                  if (dateOccurrences.hasOwnProperty(cleanedTime)) {
-                      dateOccurrences[cleanedTime]++;
-                  } else {
-                      dateOccurrences[cleanedTime] = 1;
+                  let cleanedTime = time.slice(0, time.indexOf("."));
+                  element.created_at = parseTime(cleanedTime);
+                  if (element.created_at ) {
+
                   }
               });
+              // console.log(d3DataArray);
 
-              for (var i in dateOccurrences) {
-                  let d3DataObj = {}
-                  d3DataObj.time = parseTime(i);
-                  d3DataObj.count = dateOccurrences[i];
-                  d3DataArray.push(d3DataObj);
-              }
+              // for (var i in dateOccurrences) {
+              //     let d3DataObj = {}
+              //     d3DataObj.time = parseTime(i);
+              //     d3DataObj.count = dateOccurrences[i];
+              //     d3DataObj.responseTime =
+              //     d3DataArray.push(d3DataObj);
+              // }
 
               var padding = 50;
               var svg = d3.select("#response-times")
@@ -49,25 +49,43 @@
 
               var x = d3.time.scale()
                   .domain(d3.extent(d3DataArray, function(d) {
-                      return d.time;
+                      return d.created_at;
                   }))
                   .rangeRound([padding, width - padding]);
 
               var y = d3.scale.linear()
                   .domain(d3.extent(d3DataArray, function(d) {
-                      return d.count;
+                      return d.response_time;
                   }))
                   .rangeRound([height - padding, padding]);
+
+
+
 
               var line = d3.svg.line()
                   .interpolate("basis")
                   .x(function(d) {
-                      return x(d.time);
+                      // console.log(d);
+                      return x(d.created_at);
                   })
                   .y(function(d) {
-                      return y(d.count);
+                      return y(d.response_time);
                   });
 
+              // Nest the entries by url
+              var dataNest = d3.nest()
+                  .key(function(d) {return d.url;})
+                  .entries(d3DataArray);
+              // console.log(dataNest);
+              // Loop through each url / key
+              dataNest.forEach(function(d) {
+                  console.log(d);
+                  svg.append("path")
+                      .attr("class", "line")
+                      // .style("display", "none")
+                      .attr("d", line(d.values))
+                      .classed(d.key, true);
+              })
 
               var xAxis = d3.svg.axis()
                   .scale(x)
@@ -98,19 +116,18 @@
                   .duration(1000)
                   .call(yAxis);
 
-              var path = svg
-                .append("path")
-                .attr("d", line(d3DataArray));
+              // var path = svg
+              //   .append("path")
+              //   .attr("d", line(d3DataArray));
 
-              var totalLength = path.node().getTotalLength();
-
-                  path
-                    .attr("stroke-dasharray", totalLength + " " + totalLength)
-                    .attr("stroke-dashoffset", totalLength)
-                    .transition()
-                    .duration(1000)
-                    .ease("linear")
-                    .attr("stroke-dashoffset", 0);
+              // var totalLength = path.node().getTotalLength();
+              //     path
+              //       .attr("stroke-dasharray", totalLength + " " + totalLength)
+              //       .attr("stroke-dashoffset", totalLength)
+              //       .transition()
+              //       .duration(1000)
+              //       .ease("linear")
+              //       .attr("stroke-dashoffset", 0);
 
           });
 

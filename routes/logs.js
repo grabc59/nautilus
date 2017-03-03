@@ -9,7 +9,7 @@ const router = express.Router();
 ////////////////////////
 router.get('/', function(req, res, next) {
     knex('logs')
-        .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_length', 'created_at', 'updated_at')
+        .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_time', 'created_at', 'updated_at')
         .orderBy('id')
         .then((result) => {
             res.send(result);
@@ -54,7 +54,7 @@ router.get('/top-routes', function (req, res, next) {
 ////////////////////////
 router.get('/:id', function(req, res, next) {
     knex('logs')
-        .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_length', 'created_at', 'updated_at')
+        .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_time', 'created_at', 'updated_at')
         .where({
             id: req.params.id
         })
@@ -78,7 +78,7 @@ router.post('/', function(req, res, next) {
             method: req.body.method,
             url: req.body.url,
             status: req.body.status,
-            response_length: req.body.response_length
+            response_time: req.body.response_time
         }, '*')
         .then((result) => {
             const return_result = result[0];
@@ -106,7 +106,7 @@ router.patch('/:id', function(req, res, next) {
             method: req.body.method,
             url: req.body.url,
             status: req.body.status,
-            response_length: req.body.response_length
+            response_time: req.body.response_time
         }, '*')
         .then((result) => {
             let return_result = result[0];
@@ -124,7 +124,7 @@ router.patch('/:id', function(req, res, next) {
 ////////////////////////
 router.delete('/:id', function(req, res, next) {
     knex('logs')
-        .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_length', 'created_at', 'updated_at')
+        .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_time', 'created_at', 'updated_at')
         .where({
             id: req.params.id
         })

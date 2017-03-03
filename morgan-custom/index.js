@@ -31,7 +31,7 @@
   var onHeaders = require('on-headers')
   var knex = require('./knex')
   var http = require('http');
-
+  var responseTimeExport;
   /**
    * Array of CLF month names.
    * @private
@@ -136,7 +136,7 @@
                       });
               }
               var checkIPAPI = true;
-
+              // console.log(morgan['response-time'](req, res));
               checkExistingIP(reqIP)
                   .then((result) => {
                     // console.log('^^^^^^^^^^^^', result)
@@ -150,23 +150,23 @@
                               method: req.method,
                               url: req.originalUrl,
                               status: res.statusCode,
-                              response_length: 50
+                              response_time: responseTimeExport
                           }, '*')
                           .then((logInsertResult) => {
-                            console.log('&&&&&&&&&', logInsertResult, checkIPAPI)
+                            // console.log('&&&&&&&&&', logInsertResult, checkIPAPI)
                               if (checkIPAPI) {
                                   http.get({
                                       host: 'ip-api.com',
                                       path: '/json/' + reqIP
                                   }, function(response) {
-                                      console.log('!!!!!!!!!!!');
+                                      // console.log('!!!!!!!!!!!');
                                       var body = '';
                                       response.on('data', function(d) {
                                           body += d;
                                       });
                                       response.on('end', function() {
                                           var parsed = JSON.parse(body);
-                                          console.log('************', parsed)
+                                          // console.log('************', parsed)
                                           return knex('ip_lookups')
                                               .insert({
                                                   logs_id: logInsertResult[0].id,
@@ -305,8 +305,9 @@
       var ms = (res._startAt[0] - req._startAt[0]) * 1e3 +
           (res._startAt[1] - req._startAt[1]) * 1e-6
 
-      // return truncated value
-      return ms.toFixed(digits === undefined ? 3 : digits)
+      // no decimal places, and store ms in a variable accessible by the db logrequest function
+      responseTimeExport = parseInt(ms.toFixed(digits === undefined ? 3 : digits));
+      return responseTimeExport
   })
 
   /**
