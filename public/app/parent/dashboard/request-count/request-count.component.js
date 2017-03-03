@@ -10,17 +10,6 @@
     function controller($stateParams, $state) {
         const vm = this;
         vm.$onInit = function() {
-            // var margin = {
-            //   top: 10,
-            //   left: 10,
-            //   bottom: 10,
-            //   right: 10
-            // }, width = parseInt(d3.select('#geomap').style('width')),
-            // width = width - margin.left - margin.right,
-            // ratio = .5,
-            // height = width * ratio;
-
-
 
             d3.xhr("/logs", function(err, data) {
                 // created_at will look like this 2017-02-28T05:52:43.857Z
@@ -53,18 +42,9 @@
                 var svg = d3.select("#request-count")
                     .append("svg")
 
-                // var margin = {
-                //         top: 20,
-                //         right: 20,
-                //         bottom: 30,
-                //         left: 50
-                //     },
-                    var width = 300
-                    var height = 200
-
-                // svg.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-                // .attr("width", width)
-                // .attr("height", height)
+                var width = 300
+                var height = 200
+                
                 svg.attr("viewBox", "0 0 " + width + " " + height)
 
                 var x = d3.time.scale()
