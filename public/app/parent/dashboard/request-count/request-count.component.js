@@ -87,7 +87,8 @@
                 var xAxis = d3.svg.axis()
                     .scale(x)
                     .orient("bottom")
-                    .ticks(d3.time.days, 1);
+                    // .ticks(d3.time.days, 1);
+                    .ticks(5)
 
                 svg.append("g")
                     .attr("class", "axis x-axis")
@@ -108,7 +109,6 @@
                     // .attr("transform", "translate(" + margin + ",0)")
                     .call(yAxis);
 
-                // console.log(line(d3DataArray));
                 svg.append("path").attr("d", line(d3DataArray));
 
             });
