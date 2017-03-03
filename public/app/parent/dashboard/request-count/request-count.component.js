@@ -49,8 +49,10 @@
                     d3DataArray.push(d3DataObj);
                 }
 
+                var padding = 50;
                 var svg = d3.select("#request-count")
                     .append("svg")
+
                 var margin = {
                         top: 20,
                         right: 20,
@@ -92,7 +94,7 @@
 
                 svg.append("g")
                     .attr("class", "axis x-axis")
-                    .attr("transform", "translate(0," + (height) + ")")
+                    .attr("transform", "translate(0," + (height - padding) + ")")
                     .call(xAxis);
 
                 var yAxis = d3.svg.axis()
@@ -106,7 +108,7 @@
 
                 svg.append("g")
                     .attr("class", "axis y-axis")
-                    // .attr("transform", "translate(" + margin + ",0)")
+                    .attr("transform", "translate(" + padding + ",0)")
                     .call(yAxis);
 
                 svg.append("path").attr("d", line(d3DataArray));
