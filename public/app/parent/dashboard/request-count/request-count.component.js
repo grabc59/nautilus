@@ -44,7 +44,7 @@
 
                 var width = 300
                 var height = 200
-                
+
                 svg.attr("viewBox", "0 0 " + width + " " + height)
 
                 var x = d3.time.scale()
@@ -60,12 +60,14 @@
                     .rangeRound([height - padding, padding]);
 
                 var line = d3.svg.line()
+                    .interpolate("basis")
                     .x(function(d) {
                         return x(d.time);
                     })
                     .y(function(d) {
                         return y(d.count);
                     });
+
 
                 var xAxis = d3.svg.axis()
                     .scale(x)
@@ -92,7 +94,19 @@
                     .attr("transform", "translate(" + padding + ",0)")
                     .call(yAxis);
 
-                svg.append("path").attr("d", line(d3DataArray));
+                var path = svg
+                  .append("path")
+                  .attr("d", line(d3DataArray));
+
+                var totalLength = path.node().getTotalLength();
+
+                    path
+                      .attr("stroke-dasharray", totalLength + " " + totalLength)
+                      .attr("stroke-dashoffset", totalLength)
+                      .transition()
+                      .duration(1000)
+                      .ease("linear")
+                      .attr("stroke-dashoffset", 0);
 
             });
         };
