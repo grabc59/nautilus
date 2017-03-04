@@ -11,7 +11,7 @@
         const vm = this;
         vm.$onInit = function() {
 
-          d3.xhr("/logs", function(err, data) {
+          d3.xhr("/logs/response-times-data", function(err, data) {
               // created_at will look like this 2017-02-28T05:52:43.857Z
               // parse the JSON
               var d3DataArray = JSON.parse(data.responseText)
@@ -59,6 +59,9 @@
                   }))
                   .rangeRound([height - padding, padding]);
 
+                  // console.log(d3.extent(d3DataArray, function(d) {
+                  //     return d.response_time;
+                  // }));
 
 
 
@@ -76,22 +79,27 @@
               var dataNest = d3.nest()
                   .key(function(d) {return d.url;})
                   .entries(d3DataArray);
-              // console.log(dataNest);
+              console.log(dataNest);
               // Loop through each url / key
-              dataNest.forEach(function(d) {
-                  console.log(d);
-                  svg.append("path")
-                      .attr("class", "line")
-                      // .style("display", "none")
-                      .attr("d", line(d.values))
-                      .classed(d.key, true);
-              })
+
+              svg.append("path")
+                .attr("class", "line")
+                .attr("d", line(dataNest[10].values))
+                // .classed(dataNest[0].key, true);
+                // dataNest.forEach(function(d) {
+                //     // console.log(d);
+                //     svg.append("path")
+                //         .attr("class", "line")
+                //         // .style("display", "none")
+                //         .attr("d", line(d.values))
+                //         .classed(d.key, true);
+                // })
 
               var xAxis = d3.svg.axis()
                   .scale(x)
                   .orient("bottom")
                   // .ticks(d3.time.days, 1);
-                  .ticks(5)
+                  .ticks(3)
 
               svg.append("g")
                   .attr("class", "axis x-axis")

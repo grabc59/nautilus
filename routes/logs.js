@@ -49,6 +49,20 @@ router.get('/top-routes', function (req, res, next) {
     });
 });
 
+//////// RESPONSE-TIMES
+router.get('/response-times-data', function (req, res, next) {
+    knex('logs')
+      .select('id', 'remote_address', 'remote_user', 'method', 'url', 'status', 'response_time', 'created_at', 'updated_at')
+      .whereRaw("created_at >  TO_TIMESTAMP('3/3/2017 4:12:51 PM','dd-mm-yyyy hh12:mi:ss')")
+      .orderBy('created_at')
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+        next(err);
+    });
+});
+
 ////////////////////////
 //////// GET SINGLE
 ////////////////////////

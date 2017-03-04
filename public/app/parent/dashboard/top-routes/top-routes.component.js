@@ -128,7 +128,8 @@
               .text(function(d) {
                 return d;
               })
-            .style("color", color)
+              .style("color", color)
+              // console.log(color.domain())
           });
         };
     }
