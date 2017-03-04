@@ -129,7 +129,7 @@
                 return d;
               })
               .style("color", color)
-              // console.log(color.domain())
+              console.log(color.domain())
           });
         };
     }

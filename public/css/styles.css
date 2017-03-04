@@ -179,3 +179,12 @@ path {
     stroke-width: 1;
     shape-rendering: crispEdges;
 }*/
+#response-times svg {
+  /*width: 500px;*/
+  /*height: 300px;*/
+  /*overflow-x: scroll;*/
+}
+/*#response-times .x-axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}*/
