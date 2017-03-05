@@ -15,14 +15,14 @@
                 // created_at will look like this 2017-02-28T05:52:43.857Z
                 // parse the JSON
                 var parsedData = JSON.parse(data.responseText)
-                var parseTime = d3.timeParse("%Y-%m-%d");
+                var parseTime = d3.timeParse("%Y-%m-%dT%H");
                 var dateOccurrences = {}
                 var d3DataArray = [];
 
                 parsedData.forEach(function(element) {
                     // filter for each created_at field
                     let time = element.created_at;
-                    let cleanedTime = time.slice(0, time.indexOf("T"));
+                    let cleanedTime = time.slice(0, time.indexOf(":"));
                     // count occurances of each time
                     if (dateOccurrences.hasOwnProperty(cleanedTime)) {
                         dateOccurrences[cleanedTime]++;
