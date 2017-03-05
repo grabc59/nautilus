@@ -29,46 +29,42 @@
                 .entries(d3DataArray)
                 .sort(function(a, b){
                   return d3.descending(a.values.response_time, b.values.response_time); })
-
+                .slice(0,5)
+                // console.log(nestedData)
                 var urlList = [];
                 nestedData.forEach(function(element, i) {
-                  if (i<5){
                     urlList.push(element.key);
-                  }
                 })
+                // console.log(nestedData)
 
-              ////// DRAW THE GRAPH
-              var width = 600
+              ////// DRAW THE AXES BASED ON THE DATA
+              var width = 300
               var height = 250
               var padding = 50;
+              var barPadding = 1;
               var svg = d3.select("#response-times")
-                  .style("overflow-x", "scroll")
                   .append("svg")
-                  .style("overflow-x", "scroll")
-                  .style("width", width)
-              // svg.attr("viewBox", "0 40 " + width + " " + height)
-              svg.attr("viewBox", "0 40 " + width + " " + height)
-
+              svg.attr("viewBox", "0 40 " + (width+padding) + " " + height)
 
               var x = d3.scale.ordinal()
                   .domain(urlList)
-                  .rangePoints([padding, width]);;
+                  .rangePoints([padding, width]);
 
               var y = d3.scale.linear()
-                  .domain(d3.extent(d3DataArray, function(d) {
-                      return d.response_time;
+                  .domain(d3.extent(nestedData, function(d) {
+                      return d.values.response_time;
                   }))
                   .rangeRound([height - padding, padding]);
 
-              var line = d3.svg.line()
-                  .interpolate("basis")
-                  .x(function(d) {
-                      // console.log(d);
-                      return x(d.created_at);
-                  })
-                  .y(function(d) {
-                      return y(d.response_time);
-                  });
+              // var line = d3.svg.line()
+              //     .interpolate("basis")
+              //     .x(function(d) {
+              //         // console.log(d);
+              //         return x(d.created_at);
+              //     })
+              //     .y(function(d) {
+              //         return y(d.response_time);
+              //     });
 
               var xAxis = d3.svg.axis()
                   .scale(x)
@@ -103,18 +99,25 @@
                   .duration(1000)
                   .call(yAxis);
 
-              // var path = svg
-              //   .append("path")
-              //   .attr("d", line(d3DataArray));
-
-              // var totalLength = path.node().getTotalLength();
-              //     path
-              //       .attr("stroke-dasharray", totalLength + " " + totalLength)
-              //       .attr("stroke-dashoffset", totalLength)
-              //       .transition()
-              //       .duration(1000)
-              //       .ease("linear")
-              //       .attr("stroke-dashoffset", 0);
+              ////// DRAW THE BARS
+              svg.selectAll("rect")
+        			   .data(nestedData)
+        			   .enter()
+        			   .append("rect")
+        			   .attr("x", function(d, i) {
+        			   		return (i * ((width - padding) / nestedData.length)) + padding;
+        			   })
+        			   .attr("y", function(d) {
+                    // console.log(height - (d.values.response_time * 4));
+        			   		return (height - padding) - y(d.values.response_time)  ;
+        			   })
+        			   .attr("width", (width - padding) / nestedData.length - barPadding)
+        			   .attr("height", function(d) {
+        			   		return y(d.values.response_time) ;
+        			   })
+        			  //  .attr("fill", function(d) {
+        				// 	return "rgb(0, 0, " + (d.values.response_time * 10) + ")";
+        			  //  });
 
           });
 
