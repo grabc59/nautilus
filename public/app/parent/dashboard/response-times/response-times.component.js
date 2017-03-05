@@ -15,14 +15,14 @@
               // created_at will look like this 2017-02-28T05:52:43.857Z
               // parse the JSON
               var d3DataArray = JSON.parse(data.responseText)
-              var parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S");
+              var parseTime = d3.timeParse("%Y-%m-%dT%H");
               var dateOccurrences = {}
               // var d3DataArray = [];
 
               d3DataArray.forEach(function(element) {
                 // clean ms off the timestamp and convert for d3
                   let time = element.created_at;
-                  let cleanedTime = time.slice(0, time.indexOf("."));
+                  let cleanedTime = time.slice(0, time.indexOf(":"));
                   element.created_at = parseTime(cleanedTime);
                   if (element.created_at ) {
 
@@ -68,23 +68,32 @@
               var line = d3.svg.line()
                   .interpolate("basis")
                   .x(function(d) {
-                      // console.log(d);
+                      // console.log(d.values[0].created_at);
                       return x(d.created_at);
                   })
                   .y(function(d) {
+                    // console.log(d.values[0].response_time);
                       return y(d.response_time);
                   });
 
               // Nest the entries by url
               var dataNest = d3.nest()
                   .key(function(d) {return d.url;})
+                  .key(function(d) {return d.created_at;})
+                  .rollup(function(leaves) {
+                      return {
+                          "response_time": d3.mean(leaves, function(d) {
+                            // console.log(d)
+                            return parseInt(d.response_time);
+                          })
+                      }
+                  })
                   .entries(d3DataArray);
-              console.log(dataNest);
-              // Loop through each url / key
+              // console.log(dataNest);
 
               svg.append("path")
                 .attr("class", "line")
-                .attr("d", line(dataNest[10].values))
+                .attr("d", line(dataNest[0].values))
                 // .classed(dataNest[0].key, true);
                 // dataNest.forEach(function(d) {
                 //     // console.log(d);
