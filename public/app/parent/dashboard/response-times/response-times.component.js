@@ -78,6 +78,9 @@
                  .enter()
                  .append('path')
                  .attr('class', 'line')
+                 .attr('id', function(d) {
+                   console.log(d);
+                   return d.key;})
                  .attr("d", line)
                  .attr("d",function(d) {
                    return line(d.values);
