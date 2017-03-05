@@ -48,15 +48,19 @@
               svg.attr("viewBox", "0 40 " + (width+padding) + " " + (height))
 
               var x = d3.scale.ordinal()
-                  // .rangeRoundBands([0, width], .05)
                   .domain(urlList)
                   .rangePoints([padding, (width - padding)]);
 
               var y = d3.scale.linear()
-                  .domain(d3.extent(nestedData, function(d) {
-                      return d.values.response_time;
-                  }))
-                  .range([height - padding, padding])
+                  .domain([0, d3.max(nestedData, function(d) { return d.values.response_time; })])
+                  // .domain(d3.extent(nestedData, function(d) {
+                  //     return d.values.response_time;
+                  // }))
+                  // .range([height - (2*padding), 0]) // all bars are huge and start below the x axis
+                  // .range([height - padding, 0]) // top of the tall bars are cut off, and scale extends out of view
+                  .range([height - padding, padding]) // the y axis is all in view, but the bars still go out of view, and aren't scaled properly
+                  // subtract 50 from a bar height, add 50 to the y of a bar, seems to put it in the right place
+                  // .rangeRound([height, 0]);
 
               var xAxis = d3.svg.axis()
                   .scale(x)
@@ -71,17 +75,14 @@
                   .call(xAxis)
                   .selectAll("text")
                    .style("text-anchor", "end")
-                  //  .attr("dx", "-.8em")
-                  //  .attr("dy", ".15em")
                    .attr("transform", "rotate(-65)" );
 
               var yAxis = d3.svg.axis()
                   .scale(y)
                   .orient("left")
-                  .tickFormat(function(d) {
-                      return d;
-                  })
-                  // .tickSize(5, 5, 0)
+                  // .tickFormat(function(d) {
+                  //     return d;
+                  // })
                   .ticks(5); // set rough # of ticks
 
               svg.append("g")
@@ -101,21 +102,14 @@
         			   })
         			   .attr("y", function(d) {
                     // console.log(height - (d.values.response_time * 4));
-        			   		return  y(d.values.response_time)  ;
+        			   		return  y(d.values.response_time);
         			   })
         			   .attr("width", (width - padding) / nestedData.length - barPadding)
         			   .attr("height", function(d) {
-                  //  console.log(d.values.response_time, height - y(d.values.response_time))
-        			   		return height - y(d.values.response_time) ;
+        			   		return (height - y(d.values.response_time)) - padding;
         			   })
-        			  //  .attr("fill", function(d) {
-        				// 	return "rgb(0, 0, " + (d.values.response_time * 10) + ")";
-        			  //  });
-
+                //  .range([height - padding, padding])
           });
-
-
-
         };
     }
 }());
