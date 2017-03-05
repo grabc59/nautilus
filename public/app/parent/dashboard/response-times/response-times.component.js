@@ -35,36 +35,28 @@
                 nestedData.forEach(function(element, i) {
                     urlList.push(element.key);
                 })
-                // console.log(nestedData)
+                console.log(nestedData)
 
               ////// DRAW THE AXES BASED ON THE DATA
               var width = 300
-              var height = 250
+              var height = 300
               var padding = 50;
               var barPadding = 1;
+
               var svg = d3.select("#response-times")
                   .append("svg")
-              svg.attr("viewBox", "0 40 " + (width+padding) + " " + height)
+              svg.attr("viewBox", "0 40 " + (width+padding) + " " + (height))
 
               var x = d3.scale.ordinal()
+                  // .rangeRoundBands([0, width], .05)
                   .domain(urlList)
-                  .rangePoints([padding, width]);
+                  .rangePoints([padding, (width - padding)]);
 
               var y = d3.scale.linear()
                   .domain(d3.extent(nestedData, function(d) {
                       return d.values.response_time;
                   }))
-                  .rangeRound([height - padding, padding]);
-
-              // var line = d3.svg.line()
-              //     .interpolate("basis")
-              //     .x(function(d) {
-              //         // console.log(d);
-              //         return x(d.created_at);
-              //     })
-              //     .y(function(d) {
-              //         return y(d.response_time);
-              //     });
+                  .range([height - padding, padding])
 
               var xAxis = d3.svg.axis()
                   .scale(x)
@@ -79,8 +71,8 @@
                   .call(xAxis)
                   .selectAll("text")
                    .style("text-anchor", "end")
-                   .attr("dx", "-.8em")
-                   .attr("dy", ".15em")
+                  //  .attr("dx", "-.8em")
+                  //  .attr("dy", ".15em")
                    .attr("transform", "rotate(-65)" );
 
               var yAxis = d3.svg.axis()
@@ -109,11 +101,12 @@
         			   })
         			   .attr("y", function(d) {
                     // console.log(height - (d.values.response_time * 4));
-        			   		return (height - padding) - y(d.values.response_time)  ;
+        			   		return  y(d.values.response_time)  ;
         			   })
         			   .attr("width", (width - padding) / nestedData.length - barPadding)
         			   .attr("height", function(d) {
-        			   		return y(d.values.response_time) ;
+                  //  console.log(d.values.response_time, height - y(d.values.response_time))
+        			   		return height - y(d.values.response_time) ;
         			   })
         			  //  .attr("fill", function(d) {
         				// 	return "rgb(0, 0, " + (d.values.response_time * 10) + ")";
