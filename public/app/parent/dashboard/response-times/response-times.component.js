@@ -45,7 +45,7 @@
 
               var svg = d3.select("#response-times")
                   .append("svg")
-              svg.attr("viewBox", "0 40 " + (width+padding) + " " + (height))
+              svg.attr("viewBox", "0 50 " + (width+padding) + " " + (height))
 
               var x = d3.scale.ordinal()
                   .domain(urlList)
@@ -53,14 +53,7 @@
 
               var y = d3.scale.linear()
                   .domain([0, d3.max(nestedData, function(d) { return d.values.response_time; })])
-                  // .domain(d3.extent(nestedData, function(d) {
-                  //     return d.values.response_time;
-                  // }))
-                  // .range([height - (2*padding), 0]) // all bars are huge and start below the x axis
-                  // .range([height - padding, 0]) // top of the tall bars are cut off, and scale extends out of view
-                  .range([height - padding, padding]) // the y axis is all in view, but the bars still go out of view, and aren't scaled properly
-                  // subtract 50 from a bar height, add 50 to the y of a bar, seems to put it in the right place
-                  // .rangeRound([height, 0]);
+                  .range([height - padding, padding])
 
               var xAxis = d3.svg.axis()
                   .scale(x)
