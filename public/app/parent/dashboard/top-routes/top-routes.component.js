@@ -62,20 +62,43 @@
             var color = d3.scale.ordinal()
             	.range(colorRange.range());
 
-            var w = 200
-            var h = 200
+            // var w = 200
+            var w = $('#top-routes').width() || 200;
 
-            var outerRadius = w / 2;
-            var innerRadius = w / 2 * .5;
+            // var h = 200
+            var h = $('#top-routes').height() || 200;
+
+            console.log(w, h)
+
+            // var outerRadius = w / 2;
+            var outerRadius = Math.min(w,h)/2;
+            // var innerRadius = w / 2 * .5;
+            var innerRadius = outerRadius * .5;
 
             var arc = d3.svg.arc()
                 .innerRadius(innerRadius)
                 .outerRadius(outerRadius);
 
+            $("#top-routes").onresize = function(e) {
+                console.log("resize")
+            }
             var topRoutesSvg = d3.select("#top-routes")
                 .append("svg")
-                .attr("width", w)
-                .attr("height", h);
+                // .attr("width", w)
+                .attr("width", '80%')
+                // .attr("height", h)
+                .attr("height", '80%')
+                // .attr("viewBox", "0 0 " + w + " " + h)
+                .attr("viewBox", "0 0 " + Math.min(w,h) + " " + Math.min(w,h))
+                .attr('preserveAspectRatio','xMinYMin')
+                // .attr("transform", "translate(" + Math.min(w,h) / 2 + "," + Math.min(w,h) / 2 + ")");
+                // var svg = d3.select('.chart-container').append("svg")
+                //     .attr("width", '100%')
+                //     .attr("height", '100%')
+                //     .attr('viewBox','0 0 '+Math.min(width,height)+' '+Math.min(width,height))
+                //     .attr('preserveAspectRatio','xMinYMin')
+                //     .append("g")
+                //     .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
 
             var arcs = topRoutesSvg.selectAll("g.arc")
                 .data(topRoutesPie(d3RouteData)) // pie-ify

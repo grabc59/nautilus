@@ -45,7 +45,7 @@
                 var width = 300
                 var height = 200
 
-                svg.attr("viewBox", "0 0 " + width + " " + height)
+                  svg.attr("viewBox", "0 0 " + width + " " + height)
 
                 var x = d3.time.scale()
                     .domain(d3.extent(d3DataArray, function(d) {
