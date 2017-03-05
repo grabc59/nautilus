@@ -16,15 +16,20 @@
                     left: 10,
                     bottom: 10,
                     right: 10
-                },
-                width = parseInt(d3.select('#geomap').style('width')),
-                width = width - margin.left - margin.right,
-                mapRatio = .5,
-                height = width * mapRatio;
+                }
+                // width = parseInt(d3.select('#geomap').style('width')),
+                // width = width - margin.left - margin.right,
+                var mapRatio = .5
+                // height = width * mapRatio;
+
+              var width = ($('#top-routes').width() || 200) - margin.left - margin.right;
+              var height = $('#top-routes').height() * mapRatio || 200 ;
+
 
             var projection = d3.geo.albersUsa()
-                .scale(width)
-                .translate([width / 2, height / 2]);
+                .translate([width/2, height / 2])
+                  .scale(width)
+                // .scale([500])
 
             var path = d3.geo.path()
                 .projection(projection);
@@ -34,10 +39,16 @@
                 .range(["#41b6c4","#1d91c0","#225ea8","#253494"]);
             var svg = d3.select("#geomap")
                 .append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("position","absolut")
+                // .attr("width", width)
+                // .attr("height", height)
+                // .attr("position","absolute")
                 .attr("align", "center")
+                .attr("width", '100%')
+                // .attr("height", h)
+                .attr("height", '100%')
+                // .attr("viewBox", "0 0 " + w + " " + h)
+                .attr("viewBox", "0 0 " + (Math.min(width,height) * 2) + " " + Math.min(width,height))
+                .attr('preserveAspectRatio','xMinYMin')
 
 
             d3.xhr("/logs/geomap-data", function(err, data) {

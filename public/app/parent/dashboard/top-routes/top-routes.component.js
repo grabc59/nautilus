@@ -68,8 +68,6 @@
             // var h = 200
             var h = $('#top-routes').height() || 200;
 
-            console.log(w, h)
-
             // var outerRadius = w / 2;
             var outerRadius = Math.min(w,h)/2;
             // var innerRadius = w / 2 * .5;
@@ -79,9 +77,6 @@
                 .innerRadius(innerRadius)
                 .outerRadius(outerRadius);
 
-            $("#top-routes").onresize = function(e) {
-                console.log("resize")
-            }
             var topRoutesSvg = d3.select("#top-routes")
                 .append("svg")
                 // .attr("width", w)
