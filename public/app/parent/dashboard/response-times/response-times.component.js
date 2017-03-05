@@ -45,7 +45,7 @@
 
               var svg = d3.select("#response-times")
                   .append("svg")
-              svg.attr("viewBox", "0 50 " + (width+padding) + " " + (height))
+              svg.attr("viewBox", "0 70 " + (width+padding) + " " + (height))
 
               var x = d3.scale.ordinal()
                   .domain(urlList)
@@ -94,7 +94,7 @@
         			   		return (i * ((width - padding) / nestedData.length)) + padding;
         			   })
         			   .attr("y", function(d) {
-                    // console.log(height - (d.values.response_time * 4));
+
         			   		return  y(d.values.response_time);
         			   })
         			   .attr("width", (width - padding) / nestedData.length - barPadding)
