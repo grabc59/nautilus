@@ -62,8 +62,6 @@
                   })
                   .entries(d3DataArray)
 
-              console.log(dataNest);
-
               var line = d3.svg.line()
                   .interpolate("basis")
                   .x(function(d) {
