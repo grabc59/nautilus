@@ -147,7 +147,6 @@
                 return d;
               })
               .style("color", color)
-              // console.log(color.domain())
           });
         };
     }

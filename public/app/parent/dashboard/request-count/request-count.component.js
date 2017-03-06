@@ -104,20 +104,20 @@
                     .y(function(d) { return y(d.count); });
 
                 var lineSvg = svg.append("g");
-                lineSvg.append("path")
+                var path = lineSvg.append("path")
                   .attr("class", "line")
                   .attr("d", valueline(d3DataArray));
 
                 // LINE ANIMATION THAT I'LL WANT LATER
-                // var totalLength = path.node().getTotalLength();
+                var totalLength = path.node().getTotalLength();
 
-                // path
-                // .attr("stroke-dasharray", totalLength + " " + totalLength)
-                // .attr("stroke-dashoffset", totalLength)
-                // .transition()
-                // .duration(1000)
-                // .ease("linear")
-                // .attr("stroke-dashoffset", 0);
+                path
+                .attr("stroke-dasharray", totalLength + " " + totalLength)
+                .attr("stroke-dashoffset", totalLength)
+                .transition()
+                .duration(1000)
+                .ease("linear")
+                .attr("stroke-dashoffset", 0);
 
                 /////////////////////
                 /////// TOOLTIPS
@@ -133,20 +133,13 @@
                         .style("stroke", "blue")
                         .attr("r", 4);
 
-                // example
-                // focus.append("text")
-                //        .attr("class", "y1")
-                //        .style("stroke", "white")
-                //        .style("stroke-width", "3.5px")
-                //        .style("opacity", 0.8)
-                //        .attr("dx", 8)
-                //        .attr("dy", "-.3em");
+
                 focus.append("div")
                     .attr("class", "tooltip")
                     .attr("id", "request-count-tooltip")
 
                 /////// CREATE TOOLTIP
-                var requestCountTooltip = d3.select("request-count").append("div").attr("class", "tooltip").attr("id", "top-routes-tooltip");
+                var requestCountTooltip = d3.select("request-count").append("div").attr("class", "tooltip").attr("id", "request-count-tooltip");
 
                 /////// Set the area that we use to capture our mouse movements
                 svg.append("rect")
@@ -178,28 +171,12 @@
                        focus.select("circle.y")
                            .attr("transform",
                               "translate(" + x(d.time) + "," + y(d.count) + ")");
-                        // focus.select("#request-count-tooltip")
-                        //     .attr("transform",
-                        //        "translate(" + x(d.time) + "," + y(d.count) + ")")
-                        //     .style("word-wrap", "break-word")
-                        //     .html("<strong>Time: </strong>" + (d.time)+"<br>"+"<strong>Count: </strong>" + (d.count))
+
                         requestCountTooltip.style("left", d3.event.pageX+10+"px");
                         requestCountTooltip.style("top", d3.event.pageY-25+"px");
                         requestCountTooltip.style("display", "inline-block");
                         requestCountTooltip.style("word-wrap", "break-word");
                         requestCountTooltip.html("<strong>URL: </strong>" + (d.time)+"<br>"+"<strong>Count: </strong>" + (d.count));
-                        // // top routes tooltip
-                        // arcs.on("mousemove", function(d){
-                        //     topRoutesTooltip.style("left", d3.event.pageX+10+"px");
-                        //     topRoutesTooltip.style("top", d3.event.pageY-25+"px");
-                        //     topRoutesTooltip.style("display", "inline-block");
-                        //     topRoutesTooltip.style("word-wrap", "break-word");
-                        //     topRoutesTooltip.html("<strong>URL: </strong>" + (d.data.url)+"<br>"+"<strong>Count: </strong>" + (d.data.count));
-                        // });
-                        // arcs.on("mouseout", function(d){
-                        //     topRoutesTooltip.style("display", "none");
-                        // });
-
                    }
             });
         };
