@@ -30,5 +30,10 @@
       url: '/request-count',
       component: 'requestCount',
     })
+    .state({
+      name: 'responseTimes',
+      url: '/request-times',
+      component: 'responseTimes',
+    })
   }
 }());
