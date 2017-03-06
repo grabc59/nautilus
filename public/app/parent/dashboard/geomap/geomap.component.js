@@ -21,14 +21,15 @@
                 // width = width - margin.left - margin.right,
                 var mapRatio = .5
                 // height = width * mapRatio;
+              var width = ($('#geomap').width() || 200);
+              var height = $('#geomap').height() || 200 ;
 
-              var width = ($('#top-routes').width() || 200) - margin.left - margin.right;
-              var height = $('#top-routes').height() * mapRatio || 200 ;
-
+              // const viewportSize = Math.min(width,height) * 2;
+              console.log(width,height)
 
             var projection = d3.geo.albersUsa()
                 .translate([width/2, height / 2])
-                  .scale(width)
+                .scale(width)
                 // .scale([500])
 
             var path = d3.geo.path()
@@ -46,9 +47,13 @@
                 .attr("width", '100%')
                 // .attr("height", h)
                 .attr("height", '100%')
-                // .attr("viewBox", "0 0 " + w + " " + h)
-                .attr("viewBox", "0 0 " + (Math.min(width,height) * 2) + " " + Math.min(width,height))
+                // .attr("viewBox", "0 0 " + width + " " + height)
+                // .attr("viewBox", "0 0 " + Math.min(width,height) + " " + Math.min(width,height))
+
+                .attr("viewBox", "0 0 " + width + " " + height)
+                // .attr("viewBox", "0 0  100% 100% ")
                 .attr('preserveAspectRatio','xMinYMin')
+                console.log($('#geomap').width())
 
 
             d3.xhr("/logs/geomap-data", function(err, data) {

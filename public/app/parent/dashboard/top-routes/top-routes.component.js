@@ -80,7 +80,7 @@
             var topRoutesSvg = d3.select("#top-routes")
                 .append("svg")
                 // .attr("width", w)
-                .attr("width", '80%')
+                .attr("width", '40%')
                 // .attr("height", h)
                 .attr("height", '80%')
                 // .attr("viewBox", "0 0 " + w + " " + h)
