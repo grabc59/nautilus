@@ -16,6 +16,7 @@
               // parse the JSON
               var d3DataArray = JSON.parse(data.responseText)
               var parseTime = d3.timeParse("%Y-%m-%dT%H");
+              var averagedValuesArray = [];
 
               d3DataArray.forEach(function(element) {
                 // clean ms off the timestamp and convert for d3
@@ -36,31 +37,44 @@
 
               svg.attr("viewBox", "0 0 " + width + " " + height)
 
-              var x = d3.time.scale()
-                  .domain(d3.extent(d3DataArray, function(d) {
-                        return d.created_at;
-                  }))
-                  .rangeRound([padding, width - padding]);
-
-              var y = d3.scale.linear()
-                  .domain(d3.extent(d3DataArray, function(d) {
-                      return d.response_time;
-                  }))
-                  .rangeRound([height - padding, padding]);
-
               // Nest the entries by url
               var dataNest = d3.nest()
                   .key(function(d) {return d.url;})
                   .key(function(d) {return d.created_at;})
                   .rollup(function(leaves) {
-                      return {
+                      let averagedValues = {
                           "created_at": leaves[0].created_at,
                           "response_time": d3.mean(leaves, function(d) {
                             return parseInt(d.response_time);
                           })
                       }
+                      averagedValuesArray.push(averagedValues);
+                      return averagedValues
                   })
                   .entries(d3DataArray)
+
+              // dataNest.forEach(function (element) {
+              //   element.values.forEach(function(value) {
+              //     console.log(value)
+              //     averagedValuesArray.push(value);
+              //   })
+              // })
+              console.log(averagedValuesArray);
+
+              var x = d3.time.scale()
+                  .domain(d3.extent(averagedValuesArray, function(d) {
+                        return d.created_at;
+                  }))
+                  .rangeRound([padding, width - padding]);
+
+              var y = d3.scale.linear()
+                  .domain(d3.extent(averagedValuesArray, function(d) {
+                    // console.log(d);
+                      return d.response_time;
+                  }))
+                  .rangeRound([height - padding, padding]);
+
+
 
               var line = d3.svg.line()
                   .interpolate("basis")
