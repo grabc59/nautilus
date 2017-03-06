@@ -45,8 +45,6 @@ path:hover {
   display: none;
 }
 
-#tooltip.hidden {
-}
 
 #tooltip p {
         margin: 0;
@@ -161,9 +159,37 @@ svg .axis text {
   stroke: black;
   stroke-width:1;
 }
+
 .axis path, .axis line {
   shape-rendering: crispEdges;
 }
+
+/*#request-count-tooltip {
+  color: black;
+  position: absolute;
+  width: 200px;
+  height: auto;
+  padding: 10px;
+  background-color: white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}*/
+
+
+/*#request-count-tooltip p {
+        margin: 0;
+        font-family: sans-serif;
+        font-size: 16px;
+        line-height: 20px;
+}*/
+
+
+/* LINE CHART TOOLTIPS */
 
 /*
 path {
