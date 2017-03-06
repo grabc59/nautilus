@@ -18,6 +18,10 @@
                 var parseTime = d3.timeParse("%Y-%m-%dT%H");
                 var dateOccurrences = {}
                 var d3DataArray = [];
+                // for tooltips - d3.bisector can find a value in an ordered array
+                var bisectDate = d3.bisector(function(d) {
+                  return d.time;
+                }).left;
 
                 parsedData.forEach(function(element) {
                     // filter for each created_at field
@@ -39,13 +43,13 @@
                 }
 
                 var padding = 50;
-                var svg = d3.select("#request-count")
-                    .append("svg")
-
                 var width = 300
                 var height = 200
 
-                  svg.attr("viewBox", "0 0 " + width + " " + height)
+                var svg = d3.select("#request-count")
+                    .append("svg")
+
+                svg.attr("viewBox", "0 0 " + width + " " + height)
 
                 var x = d3.time.scale()
                     .domain(d3.extent(d3DataArray, function(d) {
@@ -58,16 +62,6 @@
                         return d.count;
                     }))
                     .rangeRound([height - padding, padding]);
-
-                var line = d3.svg.line()
-                    .interpolate("basis")
-                    .x(function(d) {
-                        return x(d.time);
-                    })
-                    .y(function(d) {
-                        return y(d.count);
-                    });
-
 
                 var xAxis = d3.svg.axis()
                     .scale(x)
@@ -98,20 +92,75 @@
                     .duration(1000)
                     .call(yAxis);
 
-                var path = svg
-                  .append("path")
-                  .attr("d", line(d3DataArray));
 
-                var totalLength = path.node().getTotalLength();
 
-                    path
-                      .attr("stroke-dasharray", totalLength + " " + totalLength)
-                      .attr("stroke-dashoffset", totalLength)
-                      .transition()
-                      .duration(1000)
-                      .ease("linear")
-                      .attr("stroke-dashoffset", 0);
+                /////////////////////
+                /////// THE LINE
+                /////////////////////
 
+                var valueline = d3.svg.line()
+                    .interpolate("monotone")
+                    .x(function(d) { return x(d.time); })
+                    .y(function(d) { return y(d.count); });
+
+                var lineSvg = svg.append("g");
+                lineSvg.append("path")
+                  .attr("class", "line")
+                  .attr("d", valueline(d3DataArray));
+
+                // LINE ANIMATION THAT I'LL WANT LATER
+                // var totalLength = path.node().getTotalLength();
+
+                // path
+                // .attr("stroke-dasharray", totalLength + " " + totalLength)
+                // .attr("stroke-dashoffset", totalLength)
+                // .transition()
+                // .duration(1000)
+                // .ease("linear")
+                // .attr("stroke-dashoffset", 0);
+
+                /////////////////////
+                /////// TOOLTIPS
+                /////////////////////
+
+                /////// Adding the circle to the graph
+                var focus = svg.append("g")
+                    .style("display", "none");
+
+                focus.append("circle")
+                        .attr("class", "y")
+                        .style("fill", "none")
+                        .style("stroke", "blue")
+                        .attr("r", 4);
+
+                /////// Set the area that we use to capture our mouse movements
+                svg.append("rect")
+                   .attr("width", width)
+                   .attr("height", height)
+                   .style("fill", "none")
+                   .style("pointer-events", "all")
+                   .on("mouseover", function() { focus.style("display", null); })
+                   .on("mouseout", function() { focus.style("display", "none"); })
+                   .on("mousemove", mousemove);
+
+                   function mousemove() {
+                     /////// DETERMINING WHICH DATE WILL BE HIGHLIGHTED
+                      // determine the mouse's x coordinate
+                       var x0 = x.invert(d3.mouse(this)[0]),
+                        // find the index of the x axis value (date) closest to the mouse
+                          i = bisectDate(d3DataArray, x0, 1),
+                          // the value pair to the left of the mouse
+                          d0 = d3DataArray[i - 1],
+                          // the value pair to the right of the mouse
+                          d1 = d3DataArray[i],
+                          // the value pair closest to the mouse
+                          d = x0 - d0.time > d1.time - x0 ? d1 : d0;
+
+                      ////// move the circle to the position of the mouse
+                       focus.select("circle.y")
+                           .attr("transform",
+                                "translate(" + x(d.time) + "," + y(d.count) + ")");
+                   }
             });
         };
     }
