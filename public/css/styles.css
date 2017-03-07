@@ -224,5 +224,8 @@ span {
 .md-button {
   text-align: left;
 }
-/*li { background: green; }
-li:nth-child(odd) { background: red; }*/
+ui-view {
+  background: linear-gradient(141deg, #2450FF 0%, #207DE8 51%, #2481FF 75%);
+  height:100%;
+  overflow-y:scroll;
+}
