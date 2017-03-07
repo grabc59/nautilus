@@ -25,7 +25,7 @@
               var height = $('#geomap').height() || 200 ;
 
               // const viewportSize = Math.min(width,height) * 2;
-              console.log(width,height)
+              // console.log(width,height)
 
             var projection = d3.geo.albersUsa()
                 .translate([width/2, height / 2])
@@ -53,7 +53,7 @@
                 .attr("viewBox", "0 0 " + width + " " + height)
                 // .attr("viewBox", "0 0  100% 100% ")
                 .attr('preserveAspectRatio','xMinYMin')
-                console.log($('#geomap').width())
+                // console.log($('#geomap').width())
 
 
             d3.xhr("/logs/geomap-data", function(err, data) {
@@ -96,7 +96,7 @@
                                   return color(value);
                               } else {
                                   //If value is undefined…
-                                  return "#ccc";
+                                  return "rgba(36, 39, 42, 0.5)";
                               }
                           });
 

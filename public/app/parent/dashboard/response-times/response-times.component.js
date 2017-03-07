@@ -59,7 +59,7 @@
               //     averagedValuesArray.push(value);
               //   })
               // })
-              console.log(averagedValuesArray);
+              // console.log(averagedValuesArray);
 
               var x = d3.time.scale()
                   .domain(d3.extent(averagedValuesArray, function(d) {
@@ -91,7 +91,7 @@
                  .append('path')
                  .attr('class', 'line')
                  .attr('id', function(d) {
-                   console.log(d);
+                  //  console.log(d);
                    return d.key;})
                  .attr("d", line)
                  .attr("d",function(d) {

@@ -10,7 +10,7 @@
     function controller($stateParams, $state) {
         const vm = this;
         vm.$onInit = function() {
-            console.log("dashboard controller start");
+            // console.log("dashboard controller start");
 
 
 

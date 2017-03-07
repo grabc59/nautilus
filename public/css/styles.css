@@ -83,6 +83,8 @@ path:hover {
   /*overflow: visible;*/
 }
 
+
+
 @media only screen and (max-width: 469px) {
   .cards-container {
     -webkit-column-count: 1;
@@ -164,53 +166,59 @@ svg .axis text {
   shape-rendering: crispEdges;
 }
 
-/*#request-count-tooltip {
-  color: black;
-  position: absolute;
-  width: 200px;
-  height: auto;
-  padding: 10px;
-  background-color: white;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
-}*/
 
 
-/*#request-count-tooltip p {
-        margin: 0;
-        font-family: sans-serif;
-        font-size: 16px;
-        line-height: 20px;
-}*/
 
 
-/* LINE CHART TOOLTIPS */
 
-/*
-path {
-    stroke: steelblue;
-    stroke-width: 2;
-    fill: none;
+
+/* COLOR TESTING */
+md-content {
+/*2C7AE8*/
+background: linear-gradient(141deg, #2450FF 0%, #207DE8 51%, #2481FF 75%)
 }
 
-.axis path,
-.axis line {
-    fill: none;
-    stroke: grey;
-    stroke-width: 1;
-    shape-rendering: crispEdges;
-}*/
-#response-times svg {
-  /*width: 500px;*/
-  /*height: 300px;*/
-  /*overflow-x: scroll;*/
+md-card {
+
+  /*background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%)*/
+  background: linear-gradient(141deg, #2CB5C6 0%, #1FC8E9 51%, #2CB5FF 75%)
 }
-/*#response-times .x-axis text {
-    font-family: sans-serif;
-    font-size: 11px;
-}*/
+md-card span{
+
+  color: white;
+}
+
+md-sidenav {
+  background: linear-gradient(141deg, #494E55 0%, #000000 100%)
+
+    /*top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;*/
+}
+md-sidenav a {
+  color:white;
+}
+
+md-sidenav li, md-sidenav ul {
+  margin: 0; padding: 0;
+}
+
+md-sidenav li {
+  background-color: #24272A;
+
+}
+md-sidenav li:nth-child(odd) {
+  background: #494E55;
+}
+
+#geomap path {
+  /*stroke: rgba(255, 255, 255, 0.2);*/
+}
+
+span {
+  color: white;
+}
+/*li { background: green; }
+li:nth-child(odd) { background: red; }*/
