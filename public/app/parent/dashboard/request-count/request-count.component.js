@@ -174,7 +174,7 @@
 
                         requestCountTooltip.style("left", d3.event.pageX+10+"px");
                         requestCountTooltip.style("top", d3.event.pageY-25+"px");
-                        console.log(requestCountTooltip.style("left", d3.event.pageX+10+"px"));
+                        // console.log(requestCountTooltip.style("left", d3.event.pageX+10+"px"));
                         requestCountTooltip.style("display", "inline-block");
                         requestCountTooltip.style("word-wrap", "break-word");
                         requestCountTooltip.html("<strong>URL: </strong>" + (d.time)+"<br>"+"<strong>Count: </strong>" + (d.count));

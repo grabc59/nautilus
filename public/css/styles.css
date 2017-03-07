@@ -220,5 +220,9 @@ md-sidenav li:nth-child(odd) {
 span {
   color: white;
 }
+
+.md-button {
+  text-align: left;
+}
 /*li { background: green; }
 li:nth-child(odd) { background: red; }*/
