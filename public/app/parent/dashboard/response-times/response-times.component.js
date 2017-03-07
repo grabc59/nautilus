@@ -29,14 +29,16 @@
               });
 
               var padding = 50;
-              var svg = d3.select("#response-times")
-                  .append("svg")
-
               var width = 300
               var height = 200
 
-              svg.attr("viewBox", "0 0 " + width + " " + height)
-
+              var svg = d3.select("#response-times")
+                  .append("svg")
+                  .attr("width", '100%')
+                  .attr("height", '100%')
+                  .attr("viewBox", "0 0 " + width + " " + height)
+                  .attr('preserveAspectRatio', 'xMinYMin')
+                  
               // Nest the entries by url
               var dataNest = d3.nest()
                   .key(function(d) {return d.url;})
