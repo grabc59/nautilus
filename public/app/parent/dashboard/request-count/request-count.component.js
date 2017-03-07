@@ -48,12 +48,10 @@
 
                 var svg = d3.select("#request-count")
                     .append("svg")
-                      //// playing around with responseness
-                    // .attr("align", "center")
-                    // .attr("width", '100%')
-                    // .attr("height", '100%')
+                    .attr("width", '100%')
+                    .attr("height", '100%')
                     .attr("viewBox", "0 0 " + width + " " + height)
-                    // .attr('preserveAspectRatio', 'xMinYMin')
+                    .attr('preserveAspectRatio', 'xMinYMin')
 
                 var x = d3.time.scale()
                     .domain(d3.extent(d3DataArray, function(d) {
@@ -147,8 +145,8 @@
 
                 /////// Set the area that we use to capture our mouse movements
                 svg.append("rect")
-                   .attr("width", width)
-                   .attr("height", height)
+                .attr("width", '100%')
+                .attr("height", '100%')
                    .style("fill", "none")
                    .style("pointer-events", "all")
                    .on("mouseover", function() { focus.style("display", null); })
