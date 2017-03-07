@@ -98,7 +98,7 @@
                  .attr('id', function(d) {
                     return d.key;})
                  .attr("stroke", function(d, i) {
-                    return color(d.key); 
+                    return color(d.key);
                  })
                  .attr("d", line)
                  .attr("d",function(d) {

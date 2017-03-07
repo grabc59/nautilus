@@ -37,6 +37,12 @@
               d3DataObj[resultPropertyName] = dataOccurances[i];
               d3DataArray.push(d3DataObj);
             }
+            // cities.sort(function(x, y){
+            //    return d3.ascending(x.index, y.index);
+            // })
+            // d3DataArray.sort(function(x, y) {
+            //   return d3.descending(x.)
+            // })
             return d3DataArray;
           }
 
@@ -48,6 +54,12 @@
 
             ////// PREP REQUESTED DATA FOR D3
             var d3RouteData = convertDataCountObjForD3(countDataOccurances(data, "url"), "url", "count" )
+            .sort(function(x, y) {
+              return d3.descending(x.count, y.count);
+            })
+            .slice(0,10);
+            // console.log(d3RouteData);
+
             ////////////////////////////
             /////// DRAW THE PIE CHART
             ////////////////////////////
