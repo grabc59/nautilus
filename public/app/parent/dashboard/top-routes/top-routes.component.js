@@ -63,10 +63,11 @@
             	.range(colorRange.range());
 
             // var w = 200
-            var w = $('#top-routes').width() || 200;
+            var w = 300
+            // var w = $('#top-routes').width() || 200;
 
-            // var h = 200
-            var h = $('#top-routes').height() || 200;
+            var h = 200
+            // var h = $('#top-routes').height() || 200;
 
             var padding = 10;
 
