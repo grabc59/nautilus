@@ -68,14 +68,21 @@
             // var h = 200
             var h = $('#top-routes').height() || 200;
 
+            var padding = 10;
+
             // var outerRadius = w / 2;
-            var outerRadius = Math.min(w,h)/2;
+            var outerRadius = Math.min(w,h)/2 - padding;
             // var innerRadius = w / 2 * .5;
             var innerRadius = outerRadius * .5;
 
             var arc = d3.svg.arc()
                 .innerRadius(innerRadius)
                 .outerRadius(outerRadius);
+
+            // for expanding pie pieces
+            var arcOver = d3.svg.arc()
+              .outerRadius(outerRadius + 9)
+              .innerRadius(innerRadius)
 
             var topRoutesSvg = d3.select("#top-routes")
                 .append("svg")
@@ -95,16 +102,37 @@
                 //     .append("g")
                 //     .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
 
-            var arcs = topRoutesSvg.selectAll("g.arc")
+            var g = topRoutesSvg
+                .append('g')
+                .attr('transform', 'translate(' + padding +  ',' + padding + ')');
+                // console.log($('#top-routes > svg').width())
+// ($('#top-routes > svg').width() + padding)/2
+            var arcs = g.selectAll("g.arc")
                 .data(topRoutesPie(d3RouteData)) // pie-ify
                 .enter() // for each datum
                 .append("g") // create a g element
                 .attr("class", "arc") // which will be an arc
-                .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")") // to size
+                .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")"); // to size
 
             arcs.append("path")
                 .attr("fill", function(d, i) {
                     return color(d.data.url); // generate pie arc color
+                })
+                .on("mouseenter", function(d) {
+                  d3.select(this)
+                     .transition()
+                     .duration(500)
+                     .attr("d", arcOver)
+                })
+
+                .on("mouseout", function(d){
+                    // remove tooltip
+                    topRoutesTooltip.style("display", "none");
+
+                    // expading pie pieces
+                    d3.select(this).transition()
+                       .attr("d", arc)
+                       .attr("stroke","none");
                 })
                 .transition()
                   .ease("exp")
@@ -117,11 +145,43 @@
                 topRoutesTooltip.style("top", d3.event.pageY-25+"px");
                 topRoutesTooltip.style("display", "inline-block");
                 topRoutesTooltip.style("word-wrap", "break-word");
-                topRoutesTooltip.html("<strong>URL: </strong>" + (d.data.url)+"<br>"+"<strong>Count: </strong>" + (d.data.count));
+                topRoutesTooltip.html("<strong>URL: </strong>" + (d.data.url)+"<br>"+"<strong>Count: </strong>" + (d.data.count))
+
+
             });
-            arcs.on("mouseout", function(d){
-                topRoutesTooltip.style("display", "none");
-            });
+
+            // expading pie pieces
+            // .on("mouseenter", function(d) {
+            //   d3.select(this)
+            //     //  .attr("stroke","white")
+            //      .transition()
+            //      .duration(1000)
+            //      .attr("d", arcOver)
+            //      .attr("stroke-width",6);
+            // })
+            //
+            // .on("mouseout", function(d){
+            //     // remove tooltip
+            //     topRoutesTooltip.style("display", "none");
+            //
+            //     // expading pie pieces
+            //     d3.select(this).transition()
+            //        .attr("d", arc)
+            //        .attr("stroke","none");
+            // });
+            // .on("mouseenter", function(d) {
+            //     d3.select(this)
+            //        .attr("stroke","white")
+            //        .transition()
+            //        .duration(1000)
+            //        .attr("d", arcOver)
+            //        .attr("stroke-width",6);
+            // })
+            // .on("mouseleave", function(d) {
+            //     d3.select(this).transition()
+            //        .attr("d", arc)
+            //        .attr("stroke","none");
+            // });;
 
             function tweenPie(b) {
               var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
