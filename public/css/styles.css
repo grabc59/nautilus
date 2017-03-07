@@ -158,7 +158,6 @@ svg .axis text {
 }
 #response-times path {
   fill: none;
-  stroke: black;
   stroke-width:1;
 }
 
@@ -181,7 +180,8 @@ background: linear-gradient(141deg, #2450FF 0%, #207DE8 51%, #2481FF 75%)
 md-card {
 
   /*background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%)*/
-  background: linear-gradient(141deg, #2CB5C6 0%, #1FC8E9 51%, #2CB5FF 75%)
+  background: linear-gradient(141deg, #2CB5C6 0%, #1FC8E9 51%, #2CB5FF 75%);
+  border-radius:5px;
 }
 md-card span{
 
@@ -225,7 +225,8 @@ span {
   text-align: left;
 }
 ui-view {
-  background: linear-gradient(141deg, #2450FF 0%, #207DE8 51%, #2481FF 75%);
+  /*background: linear-gradient(141deg, #2450FF 0%, #207DE8 51%, #2481FF 75%);*/
+  background: linear-gradient(141deg,  rgb(40,53,147) 0%, #207DE8 51%, #2450FF 75%);
   height:100%;
   overflow-y:scroll;
 }

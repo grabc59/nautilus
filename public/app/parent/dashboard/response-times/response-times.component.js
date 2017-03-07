@@ -31,6 +31,9 @@
               var padding = 50;
               var width = 300
               var height = 200
+              var colorRange = d3.scale.category20();
+              var color = d3.scale.ordinal()
+                            .range(colorRange.range());
 
               var svg = d3.select("#response-times")
                   .append("svg")
@@ -38,7 +41,7 @@
                   .attr("height", '100%')
                   .attr("viewBox", "0 0 " + width + " " + height)
                   .attr('preserveAspectRatio', 'xMinYMin')
-                  
+
               // Nest the entries by url
               var dataNest = d3.nest()
                   .key(function(d) {return d.url;})
@@ -93,8 +96,10 @@
                  .append('path')
                  .attr('class', 'line')
                  .attr('id', function(d) {
-                  //  console.log(d);
-                   return d.key;})
+                    return d.key;})
+                 .attr("stroke", function(d, i) {
+                    return color(d.key); 
+                 })
                  .attr("d", line)
                  .attr("d",function(d) {
                    return line(d.values);

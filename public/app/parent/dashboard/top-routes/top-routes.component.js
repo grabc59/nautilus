@@ -62,18 +62,11 @@
             var color = d3.scale.ordinal()
             	.range(colorRange.range());
 
-            // var w = 200
             var w = 300
-            // var w = $('#top-routes').width() || 200;
-
             var h = 200
-            // var h = $('#top-routes').height() || 200;
+            var padding = 20;
 
-            var padding = 10;
-
-            // var outerRadius = w / 2;
             var outerRadius = Math.min(w,h)/2 - padding;
-            // var innerRadius = w / 2 * .5;
             var innerRadius = outerRadius * .5;
 
             var arc = d3.svg.arc()
@@ -82,32 +75,20 @@
 
             // for expanding pie pieces
             var arcOver = d3.svg.arc()
-              .outerRadius(outerRadius + 9)
+              .outerRadius(outerRadius + 18)
               .innerRadius(innerRadius)
 
             var topRoutesSvg = d3.select("#top-routes")
                 .append("svg")
-                // .attr("width", w)
-                .attr("width", '40%')
-                // .attr("height", h)
+                .attr("width", '50%')
                 .attr("height", '80%')
-                // .attr("viewBox", "0 0 " + w + " " + h)
                 .attr("viewBox", "0 0 " + Math.min(w,h) + " " + Math.min(w,h))
                 .attr('preserveAspectRatio','xMinYMin')
-                // .attr("transform", "translate(" + Math.min(w,h) / 2 + "," + Math.min(w,h) / 2 + ")");
-                // var svg = d3.select('.chart-container').append("svg")
-                //     .attr("width", '100%')
-                //     .attr("height", '100%')
-                //     .attr('viewBox','0 0 '+Math.min(width,height)+' '+Math.min(width,height))
-                //     .attr('preserveAspectRatio','xMinYMin')
-                //     .append("g")
-                //     .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
 
             var g = topRoutesSvg
                 .append('g')
                 .attr('transform', 'translate(' + padding +  ',' + padding + ')');
-                // console.log($('#top-routes > svg').width())
-// ($('#top-routes > svg').width() + padding)/2
+
             var arcs = g.selectAll("g.arc")
                 .data(topRoutesPie(d3RouteData)) // pie-ify
                 .enter() // for each datum
@@ -122,7 +103,7 @@
                 .on("mouseenter", function(d) {
                   d3.select(this)
                      .transition()
-                     .duration(500)
+                     .duration(100)
                      .attr("d", arcOver)
                 })
 
@@ -151,63 +132,30 @@
 
             });
 
-            // expading pie pieces
-            // .on("mouseenter", function(d) {
-            //   d3.select(this)
-            //     //  .attr("stroke","white")
-            //      .transition()
-            //      .duration(1000)
-            //      .attr("d", arcOver)
-            //      .attr("stroke-width",6);
-            // })
-            //
-            // .on("mouseout", function(d){
-            //     // remove tooltip
-            //     topRoutesTooltip.style("display", "none");
-            //
-            //     // expading pie pieces
-            //     d3.select(this).transition()
-            //        .attr("d", arc)
-            //        .attr("stroke","none");
-            // });
-            // .on("mouseenter", function(d) {
-            //     d3.select(this)
-            //        .attr("stroke","white")
-            //        .transition()
-            //        .duration(1000)
-            //        .attr("d", arcOver)
-            //        .attr("stroke-width",6);
-            // })
-            // .on("mouseleave", function(d) {
-            //     d3.select(this).transition()
-            //        .attr("d", arc)
-            //        .attr("stroke","none");
-            // });;
-
             function tweenPie(b) {
               var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
               return function(t) { return arc(i(t)); };
             }
 
             //////// LEGEND
-            var topRoutesLegendContainer = d3.select("#top-routes")
-              .append("div")
-              .attr("width", w)
-              .attr("height", "50px")
-              .attr("class", "legend-container")
-              .attr("id", "top-routes-legend-container")
-
-            var legend = topRoutesLegendContainer.selectAll('.legend')
-                .data(color.domain())
-                .enter()
-                .append('g')
-                .attr('class', 'legend')
-
-            legend.append('div')
-              .text(function(d) {
-                return d;
-              })
-              .style("color", color)
+          //   var topRoutesLegendContainer = d3.select("#top-routes")
+          //     .append("div")
+          //     .attr("width", w)
+          //     .attr("height", "50px")
+          //     .attr("class", "legend-container")
+          //     .attr("id", "top-routes-legend-container")
+          //
+          //   var legend = topRoutesLegendContainer.selectAll('.legend')
+          //       .data(color.domain())
+          //       .enter()
+          //       .append('g')
+          //       .attr('class', 'legend')
+          //
+          //   legend.append('div')
+          //     .text(function(d) {
+          //       return d;
+          //     })
+          //     .style("color", color)
           });
         };
     }
