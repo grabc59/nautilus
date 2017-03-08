@@ -169,10 +169,30 @@
                     // upon turning the switch off, remove it from d3's array
                     if (idx > -1) {
                         vm.d3DataNest.splice(idx, 1);
+                        svg.selectAll(".line")
+                            // .data(vm.dataNest)
+                            .data(vm.d3DataNest)
+                            .exit()
+                            .remove();
                     }
                     // upon turning the switch on, push the url to the d3 data array to be rendered
                     else {
                         vm.d3DataNest.push(n);
+                        svg.selectAll(".line")
+                            // .data(vm.dataNest)
+                            .data(vm.d3DataNest)
+                            .enter()
+                            .append('path')
+                            .attr('class', 'line')
+                            //  .attr('id', function(d) {
+                            // return d.key;})
+                            .attr("stroke", function(d, i) {
+                                return color(d.key);
+                            })
+                            .attr("d", line)
+                            .attr("d", function(d) {
+                                return line(d.values);
+                            });
                     }
                     console.log(vm.d3DataNest)
 
@@ -185,21 +205,7 @@
                     // the data has been added or removed from the vm.d3DataNest array
 
                     // what's rendered by d3 needs to be only vm.d3DataNest
-                    svg.selectAll(".line")
-                        // .data(vm.dataNest)
-                        .data(vm.d3DataNest)
-                        .enter()
-                        .append('path')
-                        .attr('class', 'line')
-                        //  .attr('id', function(d) {
-                        // return d.key;})
-                        .attr("stroke", function(d, i) {
-                            return color(d.key);
-                        })
-                        .attr("d", line)
-                        .attr("d", function(d) {
-                            return line(d.values);
-                        });
+
               					//Update scale domains
               					// xScale.domain([0, d3.max(dataset, function(d) { return d[0]; })]);
               					// yScale.domain([0, d3.max(dataset, function(d) { return d[1]; })]);
