@@ -241,5 +241,14 @@ ui-view {
 .menudemoBasicUsage .md-menu-demo {
   padding: 24px; }
 
+.menu-demo-container {
+  display: inline;
+}
+
 .menudemoBasicUsage .menu-demo-container {
+
   min-height: 200px; }
+
+.cg-title-button {
+  margin-bottom:0px;
+}

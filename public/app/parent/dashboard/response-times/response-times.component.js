@@ -4,8 +4,9 @@
         .component('responseTimes', {
             controller: controller,
             templateUrl: `app/parent/dashboard/response-times/response-times.template.html`
-        });
-    controller.$inject = ['$stateParams', '$state', '$mdDialog'];
+        })
+
+    controller.$inject = ['$stateParams', '$state', '$mdDialog']
 
     function controller($stateParams, $state, $mdDialog) {
         const vm = this;

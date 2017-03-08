@@ -2,17 +2,18 @@
     <md-card flex>
         <md-card-title>
             <md-card-title-text>
-                <span class="md-headline">Response Times (ms)</span>
+                <span class="md-headline">Response Times (ms)
                 <div class="cg-md-menu" ng-cloak>
                     <div class="menu-demo-container">
                         <md-menu>
-                            <md-button aria-label="Open phone interactions menu" ng-click="$ctrl.openMenu($mdOpenMenu, $event)">
+                            <md-button class="cg-title-button" aria-label="Open phone interactions menu" ng-click="$ctrl.openMenu($mdOpenMenu, $event)">
                                 <ng-md-icon icon="filter_list" size="35" style="fill:white;"></ng-md-icon>
                             </md-button>
                             <md-menu-content width="4">
                                 <md-menu-item ng-repeat="n in $ctrl.dataNest" >
 
-                                      <md-switch value="{{n}}" ng-checked="$ctrl.d3DataNest.indexOf(n) > -1" ng-click="$ctrl.toggleSelection(n)" aria-label="Switch">
+                                      <md-switch value="{{n}}" ng-checked="$ctrl.d3DataNest.indexOf(n) > -1" ng-click="$ctrl.toggleSelection(n)"
+                                      md-prevent-menu-close aria-label="Switch">
                                       {{n.key}}
 
                                     </md-switch>
@@ -21,6 +22,7 @@
                         </md-menu>
                     </div>
                 </div>
+                </span>
             </md-card-title-text>
         </md-card-title>
         <!-- <md-card-content align="center"> -->
