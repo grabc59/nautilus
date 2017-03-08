@@ -17,6 +17,8 @@
                 var d3DataArray = JSON.parse(data.responseText)
                 var parseTime = d3.timeParse("%Y-%m-%dT%H");
                 var averagedValuesArray = [];
+                // d3DataNest will be used by d3 as the data from dataNest that actually gets lines drawn
+                vm.d3DataNest = [];
 
                 d3DataArray.forEach(function(element) {
                     // clean ms off the timestamp and convert for d3
@@ -58,6 +60,27 @@
                         return averagedValues
                     })
                     .entries(d3DataArray)
+                  // console.log(vm.dataNest);
+                  // {
+                  // key: URL
+                  // values: [
+                  //    {
+                  //      key: DATE
+                  //      values:
+                  //          {
+                  //            created_at: DATE
+                  //            response_time: MS
+                  //          }
+                  //    }
+                  //  ]
+                  // }
+                  // console.log(averagedValuesArray);
+                    // [
+                    //   {
+                    //     created_at: DATE,
+                    //     response_time: MS
+                    //   }
+                    // ]
 
                 var x = d3.time.scale()
                     .domain(d3.extent(averagedValuesArray, function(d) {
@@ -84,7 +107,8 @@
                     });
 
                 svg.selectAll(".line")
-                    .data(vm.dataNest)
+                    // .data(vm.dataNest)
+                    .data(vm.d3DataNest)
                     .enter()
                     .append('path')
                     .attr('class', 'line')
@@ -131,9 +155,6 @@
                 ///////// DROPDOWN
                 ///////////////////////////
 
-                // d3DataNest will be used by d3 as the data from dataNest that actually gets lines drawn
-                vm.d3DataNest = [];
-
                 // the dropdown functionality itself
                 var originatorEv;
                 vm.openMenu = function($mdOpenMenu, ev) {
@@ -154,6 +175,60 @@
                         vm.d3DataNest.push(n);
                     }
                     console.log(vm.d3DataNest)
+
+
+
+                    ////////////////////////////////////
+                    ////// RERENDERING WITH NEW DATA
+                    ////////////////////////////////////
+                    // a toggle button has been clicked
+                    // the data has been added or removed from the vm.d3DataNest array
+
+                    // what's rendered by d3 needs to be only vm.d3DataNest
+                    svg.selectAll(".line")
+                        // .data(vm.dataNest)
+                        .data(vm.d3DataNest)
+                        .enter()
+                        .append('path')
+                        .attr('class', 'line')
+                        //  .attr('id', function(d) {
+                        // return d.key;})
+                        .attr("stroke", function(d, i) {
+                            return color(d.key);
+                        })
+                        .attr("d", line)
+                        .attr("d", function(d) {
+                            return line(d.values);
+                        });
+              					//Update scale domains
+              					// xScale.domain([0, d3.max(dataset, function(d) { return d[0]; })]);
+              					// yScale.domain([0, d3.max(dataset, function(d) { return d[1]; })]);
+
+              					//Update all circles
+              					// svg.selectAll("circle")
+              					//    .data(dataset)
+              					//    .transition()
+              					//    .duration(1000)
+              					//    .attr("cx", function(d) {
+              					//    		return xScale(d[0]);
+              					//    })
+              					//    .attr("cy", function(d) {
+              					//    		return yScale(d[1]);
+              					//    });
+
+              					//Update X axis
+              					// svg.select(".x.axis")
+              				  //   	.transition()
+              				  //   	.duration(1000)
+              					// 	.call(xAxis);
+
+              					//Update Y axis
+              					// svg.select(".y.axis")
+              				  //   	.transition()
+              				  //   	.duration(1000)
+              					// 	.call(yAxis);
+
+              				// });
                 }
             });
 
