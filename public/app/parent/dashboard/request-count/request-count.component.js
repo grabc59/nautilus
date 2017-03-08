@@ -68,8 +68,8 @@
                 var xAxis = d3.svg.axis()
                     .scale(x)
                     .orient("bottom")
-                    // .ticks(d3.time.days, 1);
-                    .ticks(5)
+                    .ticks(d3.time.days, 1)
+                    .ticks(4)
 
                 svg.append("g")
                     .attr("class", "axis x-axis")

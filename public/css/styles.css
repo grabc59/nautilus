@@ -160,6 +160,10 @@ svg .axis text {
   fill: none;
   stroke-width:1;
 }
+#response-times path:hover {
+  fill: none;
+  stroke-width:3;
+}
 
 .axis path, .axis line {
   shape-rendering: crispEdges;

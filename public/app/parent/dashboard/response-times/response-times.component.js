@@ -245,6 +245,7 @@
                             .attr("d", function(d) {
                                 return line(d.values);
                             });
+                            
                     }
                     console.log(vm.d3DataNest)
 
