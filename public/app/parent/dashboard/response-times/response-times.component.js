@@ -155,6 +155,10 @@
                 ///////////////////////////
                 ///////// DROPDOWN
                 ///////////////////////////
+                vm.searchTerm;
+                vm.clearSearchTerm = function() {
+                  vm.searchTerm = "";
+                }
 
                 // the dropdown functionality itself
                 var originatorEv;
