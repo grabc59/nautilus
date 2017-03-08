@@ -19,7 +19,7 @@
                 var parseTime = d3.timeParse("%Y-%m-%dT%H");
                 var averagedValuesArray = [];
                 // d3DataNest will be used by d3 as the data from dataNest that actually gets lines drawn
-                vm.d3DataNest = [];
+
 
                 d3DataArray.forEach(function(element) {
                     // clean ms off the timestamp and convert for d3
@@ -27,6 +27,18 @@
                     let cleanedTime = time.slice(0, time.indexOf(":"));
                     element.created_at = parseTime(cleanedTime);
                 });
+
+                // let validatedArray = function(d3DataArray) {
+                //    return d3DataArray.filter(function(obj) {
+                //     return obj.y !== null;
+                //   });
+                // }
+                // d3DataArray.filter(function(obj) {
+                //   if (obj)
+                //   let time = element.created_at;
+                //   let cleanedTime = time.slice(0, time.indexOf(":"));
+                //   element.created_at = parseTime(cleanedTime);
+                // })
 
                 var padding = 50;
                 var width = 300
@@ -61,6 +73,10 @@
                         return averagedValues
                     })
                     .entries(d3DataArray)
+
+                    // initialize the displayed lines to include all the values in dataNest 
+                    vm.d3DataNest = vm.dataNest.slice()
+
                   // console.log(vm.dataNest);
                   // {
                   // key: URL
