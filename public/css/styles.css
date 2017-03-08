@@ -229,3 +229,17 @@ ui-view {
   height:100%;
   overflow-y:scroll;
 }
+
+
+
+
+
+/* DROPDOWN */
+.cg-md-menu {
+  display:inline;
+}
+.menudemoBasicUsage .md-menu-demo {
+  padding: 24px; }
+
+.menudemoBasicUsage .menu-demo-container {
+  min-height: 200px; }

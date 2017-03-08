@@ -32,7 +32,7 @@
     })
     .state({
       name: 'responseTimes',
-      url: '/request-times',
+      url: '/response-times',
       component: 'responseTimes',
     })
   }
