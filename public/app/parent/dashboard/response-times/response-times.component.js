@@ -74,9 +74,9 @@
                     })
                     .entries(d3DataArray)
 
-                    // initialize the displayed lines to include all the values in dataNest 
-                    vm.d3DataNest = vm.dataNest.slice()
-
+                    // initialize the displayed lines to include all the values in dataNest
+                    let originalDataNest = vm.dataNest.slice()
+                    vm.d3DataNest = originalDataNest;
                   // console.log(vm.dataNest);
                   // {
                   // key: URL
@@ -174,6 +174,37 @@
                 vm.searchTerm;
                 vm.clearSearchTerm = function() {
                   vm.searchTerm = "";
+                }
+
+
+                vm.toggleAllCounter = true;
+                vm.toggleAll = function() {
+                  vm.toggleAllCounter = !vm.toggleAllCounter;
+                  console.log(vm.toggleAllCounter);
+                  if (vm.toggleAllCounter) {
+                    vm.d3DataNest = originalDataNest;
+                    svg.selectAll(".line")
+                        // .data(vm.dataNest)
+                        .data(vm.d3DataNest)
+                        .enter()
+                        .append('path')
+                        .attr('class', 'line')
+                        //  .attr('id', function(d) {
+                        // return d.key;})
+                        .attr("stroke", function(d, i) {
+                            return color(d.key);
+                        })
+                        .attr("d", line)
+                        .attr("d", function(d) {
+                            return line(d.values);
+                        });
+                  } else {
+                    vm.d3DataNest = [];
+                    svg.selectAll(".line")
+                        .data(vm.d3DataNest)
+                        .exit()
+                        .remove();
+                  }
                 }
 
                 // the dropdown functionality itself
