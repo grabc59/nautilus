@@ -74,18 +74,6 @@
             var color = d3.scale.ordinal()
             	.range(colorRange.range());
 
-            // var color = d3.scale.linear().domain([1,20])
-
-        //     var color = d3.scale.linear().domain([costMin,costMax])
-        // .range(['#0075B4', '#70B5DC']);
-            // var color = d3.scale.ordinal()
-
-                // .range(["#ffffe5","#fff7bc","#fee391","#fec44f","#fe9929","#ec7014","#cc4c02","#993404","#662506"]);
-
-                // .range(["#F39959", "#EE9359", "#EA8E58", "#E58858","#	","#DB7D57","#D77857","#D27256","#CD6D56","#C86756","#C46255","#BF5C55"]);
-
-                // .range(["#FFB519", "#F8B017", "#F1AA14", "#EAA512","#	","#E39F10","#DC9A0E","#D5940B","#CE8F09","#C78907","#C08405","#B97E02", "#B27900"]);
-
             var w = 300
             var h = 200
             var padding = 20;
