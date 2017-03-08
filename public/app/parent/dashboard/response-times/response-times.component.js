@@ -31,7 +31,7 @@
               var padding = 50;
               var width = 300
               var height = 200
-              var colorRange = d3.scale.category20();
+              var colorRange = d3.scale.category20c();
               var color = d3.scale.ordinal()
                             .range(colorRange.range());
 
@@ -57,6 +57,9 @@
                       return averagedValues
                   })
                   .entries(d3DataArray)
+                  // .slice(0, 10)
+
+              console.log(dataNest);
 
               // dataNest.forEach(function (element) {
               //   element.values.forEach(function(value) {
@@ -95,8 +98,8 @@
                  .enter()
                  .append('path')
                  .attr('class', 'line')
-                 .attr('id', function(d) {
-                    return d.key;})
+                //  .attr('id', function(d) {
+                    // return d.key;})
                  .attr("stroke", function(d, i) {
                     return color(d.key);
                  })
@@ -104,6 +107,67 @@
                  .attr("d",function(d) {
                    return line(d.values);
                  });
+
+                 ///// line animations
+                //  var totalLength = path.node().getTotalLength();
+                 //
+                //  path
+                //  .attr("stroke-dasharray", totalLength + " " + totalLength)
+                //  .attr("stroke-dashoffset", totalLength)
+                //  .transition()
+                //  .duration(1000)
+                //  .ease("linear")
+                //  .attr("stroke-dashoffset", 0);
+                function animatelines(whichline) {
+
+                				// Look at what button was clicked
+                				if(whichline == 0 ){
+
+                				// First set all the lines to be invisible
+                				d3.selectAll(".line").style("opacity","0");
+
+                				// Then highlight the main line to be fully visable and give it a thicker stroke
+                				d3.select("#line0").style("opacity","1").style("stroke-width",4);
+
+                				// First work our the total length of the line
+                				var totalLength = d3.select("#line0").node().getTotalLength();
+
+                				d3.selectAll("#line0")
+                				  // Set the line pattern to be an long line followed by an equally long gap
+                				  .attr("stroke-dasharray", totalLength + " " + totalLength)
+                				  // Set the intial starting position so that only the gap is shown by offesetting by the total length of the line
+                				  .attr("stroke-dashoffset", totalLength)
+                				  // Then the following lines transition the line so that the gap is hidden...
+                				  .transition()
+                				  .duration(5000)
+                				  .ease("quad") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
+                				  .attr("stroke-dashoffset", 0);
+
+                			  }
+                			 else if(whichline == 1){
+
+                				d3.selectAll(".line").style("opacity","0.5");
+                        
+                				//Select All of the lines and process them one by one
+                				d3.selectAll(".line").each(function(d,i){
+
+                				// Get the length of each line in turn
+                				var totalLength = d3.select("#line" + i).node().getTotalLength();
+
+                					d3.selectAll("#line" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
+                					  .attr("stroke-dashoffset", totalLength)
+                					  .transition()
+                					  .duration(5000)
+                					  .delay(100*i)
+                					  .ease("quad") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
+                					  .attr("stroke-dashoffset", 0)
+                					  .style("stroke-width",3)
+                				})
+                			 }
+                	  }
+
+
+
 
               var xAxis = d3.svg.axis()
                   .scale(x)
@@ -132,6 +196,26 @@
                   .transition()
                   .duration(1000)
                   .call(yAxis);
+
+                  //////// LEGEND
+                  // var topRoutesLegendContainer = d3.select("#response-times")
+                  //   .append("div")
+                  //   .attr("width", width)
+                  //   .attr("height", "50px")
+                  //   .attr("class", "legend-container")
+                  //   .attr("id", "response-times-legend-container")
+                  //
+                  // var legend = topRoutesLegendContainer.selectAll('.legend')
+                  //     .data(color.domain())
+                  //     .enter()
+                  //     .append('g')
+                  //     .attr('class', 'legend')
+                  //
+                  // legend.append('div')
+                  //   .text(function(d) {
+                  //     return d;
+                  //   })
+                  //   .style("color", color)
 
           });
         };

@@ -110,7 +110,6 @@
                   .attr("class", "line")
                   .attr("d", valueline(d3DataArray));
 
-                // LINE ANIMATION THAT I'LL WANT LATER
                 var totalLength = path.node().getTotalLength();
 
                 path

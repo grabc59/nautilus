@@ -161,25 +161,6 @@
               return function(t) { return arc(i(t)); };
             }
 
-            //////// LEGEND
-          //   var topRoutesLegendContainer = d3.select("#top-routes")
-          //     .append("div")
-          //     .attr("width", w)
-          //     .attr("height", "50px")
-          //     .attr("class", "legend-container")
-          //     .attr("id", "top-routes-legend-container")
-          //
-          //   var legend = topRoutesLegendContainer.selectAll('.legend')
-          //       .data(color.domain())
-          //       .enter()
-          //       .append('g')
-          //       .attr('class', 'legend')
-          //
-          //   legend.append('div')
-          //     .text(function(d) {
-          //       return d;
-          //     })
-          //     .style("color", color)
           });
         };
     }
