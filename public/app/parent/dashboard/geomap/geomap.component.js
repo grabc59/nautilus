@@ -37,7 +37,9 @@
 
 
             var color = d3.scale.quantize()
-                .range(["#41b6c4", "#1d91c0", "#225ea8", "#253494"]);
+                // .range(["#41b6c4", "#1d91c0", "#225ea8", "#253494"]);
+                .range(["#fee6ce","#fdd0a2","#fdae6b","#fd8d3c","#f16913"])
+                // .range(["#fdae6b","#fd8d3c","#f16913","#d94801","#a63603","#7f2704"])
             var svg = d3.select("#geomap")
                 .append("svg")
                 .attr("align", "center")
