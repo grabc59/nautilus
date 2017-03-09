@@ -14,11 +14,12 @@
                                        type="search"
                                        placeholder="Search URL"
                                        class="cg-searchbox md-text">
-
-                                       <md-switch ng-checked="$ctrl.toggleAllCounter" ng-click="$ctrl.toggleAll()"
-                                       md-prevent-menu-close aria-label="Toggle All">
-                                       Toggle All
-                                       </md-switch>
+                                      <md-menu-item>
+                                         <md-switch ng-checked="$ctrl.toggleAllCounter" ng-click="$ctrl.toggleAll()"
+                                         md-prevent-menu-close aria-label="Toggle All">
+                                         Toggle All
+                                         </md-switch>
+                                      </md-menu-item>
 
                                       <md-menu-item ng-repeat="n in $ctrl.dataNest | filter:$ctrl.searchTerm" >
 
