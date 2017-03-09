@@ -69,7 +69,7 @@
                     .scale(x)
                     .orient("bottom")
                     .ticks(d3.time.days, 1)
-                    .ticks(4)
+                    .ticks(3)
 
                 svg.append("g")
                     .attr("class", "axis x-axis")
