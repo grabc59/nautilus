@@ -11,7 +11,7 @@
     function controller($stateParams, $state, $scope, $mdSidenav) {
       const vm = this;
       vm.$onInit = function() {
-        console.log("nav-panel controller start");
+        $('.testing').css('color', 'red');
       };
       $scope.toggleLeft = buildToggler('left');
 
