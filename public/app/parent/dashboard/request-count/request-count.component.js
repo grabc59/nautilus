@@ -166,9 +166,20 @@
                           // the value pair to the right of the mouse
                           d1 = d3DataArray[i],
                           // the value pair closest to the mouse
-                          d = x0 - d0.time > d1.time - x0 ? d1 : d0;
+                          compareDateValues = function (leftVal, rightVal, mouseXPosition) {
+                            // check if values are defined
+                            if (leftVal && rightVal) {
+                              return mouseXPosition - leftVal.time > rightVal.time - mouseXPosition ? rightVal : leftVal;
+                            } else {
+                              return; // prevent console logs errors when mouse is at the edge of the line graph
+                            }
+                          },
+                          d = compareDateValues(d0, d1, x0);
 
                       ////// move the circle to the position of the mouse
+
+                      // if a mouse position between 2 values was determined
+                      if (d) {
                        focus.select("circle.y")
                            .attr("transform",
                               "translate(" + x(d.time) + "," + y(d.count) + ")");
@@ -179,6 +190,7 @@
                         requestCountTooltip.style("display", "inline-block");
                         requestCountTooltip.style("word-wrap", "break-word");
                         requestCountTooltip.html("<strong>URL: </strong>" + (d.time)+"<br>"+"<strong>Count: </strong>" + (d.count));
+                      }
                    }
             });
         };
