@@ -10,4 +10,4 @@ This project aims to collect data about a web server, and present it as meaningf
 https://www.pivotaltracker.com/n/projects/1978359
 
 ## Deployment
-coming soon
+https://grabski-nautilus.herokuapp.com
