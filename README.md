@@ -11,3 +11,6 @@ https://www.pivotaltracker.com/n/projects/1978359
 
 ## Deployment
 https://grabski-nautilus.herokuapp.com
+
+## Video Demonstration
+[![NAUTILUS DEMO VIDEO](https://img.youtube.com/vi/LwBtdaht8C8/0.jpg)](https://www.youtube.com/watch?v=LwBtdaht8C8)
